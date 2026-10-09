@@ -1,0 +1,259 @@
+J. Combin. Theory Ser. A —— 审稿报告（Referee 1）
+稿件：GROUP-INVARIANT BUTSON HADAMARD MATRICES AND A PRIME DIVIDING THE ORDER EXACTLY ONCE
+（preprintBH/main.pdf，Draft of October 9, 2026，24 页）
+审稿日期：2026-10-09
+
+说明：编号以编译后的 PDF 为准。编辑部委托书里写的 "Lemma 5.5（F-bound equality）" 在 PDF 中是 Lemma 5.7（Equality in the descent bound）；PDF 中的 Corollary 5.5 是 KSW 推论（源码 label cor:ksw）。委托书里的 "Theorem S′" 指 PDF 中的 Theorem 4.1（含 p=2、h≡2 (mod 4) 的锐化形式；Lean 中为 no_perfect_function_sharp）。
+
+======================================================================
+1. 内容概述
+======================================================================
+
+稿件的核心是一个很短的定理（Theorem S = Theorem 4.1）：G 为有限交换群，素数 p 满足 p ∥ |G|，并且 p 在 Q(ζ_h) 中不分歧（即 p ∤ h，或 p=2 且 4 ∤ h）。在这些条件下，不存在 BH(G,h)。等价地说，不存在广义 bent 函数 G→Z_h；G 循环时，不存在长度 |G| 的 μ_h 上完美序列。
+
+证明思路如下。写 G = H × C_p，只对 H 的特征做部分求值，把 C_p 留作群环变量，得到 X_χ ∈ O[C_p]，满足 X_χX_χ* = |G|。在 O/𝔭[C_p] = F[T]/(T−1)^p 这个局部环中做"单位/零因子"二分，推出 X_χ 的全部系数落在同一个 𝔭 或 𝔭̄ 中（列引理，Lemma 4.2）。最后对单个陪集 c_kT^k 用 Parseval 恒等式，得到 |H|² ∈ 𝔭，与 p ∤ |H| 矛盾。
+
+由此给出的推论有：
+ (a) Do Duc [DD19a, Conj. 3.1] 中条件 (ii) 的必要性，以及 ν_p(n)=1 时条件 (i) 的必要性，对一切交换群成立；在 Do Duc 的 2687 个开放对中排除 2323 个。
+ (b) KSW 问题 m=1 的情形，即 q≡2 (mod 4) 时不存在 [1,q] 型广义 bent 函数（Corollary 5.5）。
+ (c) 半正则 RDS 的结构结论：若 p ∥ |G/N|，则 N 是 p-群，不需要分裂假设（Corollary 5.1 = Corollary R）。由此判定 LSZ23 表中的 8 个 "?"。
+ (d) Arasu 综述中 1000 以内尚未排除的 11 个循环复 Hadamard 阶全部被排除。
+ (e) 结合 Schmidt 下降界的等号情形细化（Lemma 5.7），N≡0 (mod 4) 的完美四元序列在 5000 以内只剩 3528 和 4900 两个长度。
+ (f) Yayla 表闭合。
+
+第二部分处理"分歧区"，给出分歧比较引理（Lemma A = Lemma 6.2）、一个交错积恒等式（Theorem B = Theorem 6.4），并证明 Theorem C（Theorem 6.6）：对一切素数 p≠q 与 e≥1，不存在循环 BH(pq^e, p)。新的部分是 p 奇且 e≥2。第三部分是不带完整证明的"其他论证"汇编。第 8–9 节描述 Lean 形式化与计算。
+
+======================================================================
+2. 正确性（逐行核查）
+======================================================================
+
+2.1 Theorem 4.1（Theorem S / S′）与 Lemma 4.2（列引理）
+
+逐行核查后结论为正确，我没有发现任何缺口。各步如下。
+
+ - §4.1 设置：p ∥ |G|，所以 Sylow p-子群为 C_p，是直和因子，G = H × C_p，p ∤ |H|。取 L = lcm(h′, exp H)，其中 p=2、h≡2 (mod 4) 时 h′ = h/2，此时 μ_h = ±μ_{h′}。于是 p ∤ L，p 在 O = Z[ζ_L] 中不分歧。部分求值 Z[ζ_h][H×C_p] → O[C_p] 是与 * 交换的环同态，所以 X_χX_χ* = |G|。正确。
+
+ - Lemma 4.2 第一步：令 z = F(1)。由 F*(1) = z̄ 得 z z̄ = n ∈ 𝔭，所以 z ∈ 𝔭 或 z̄ ∈ 𝔭。若两者都在 𝔭 中，则 v_𝔭(n) ≥ 2，与"不分歧且 v_p(n)=1"矛盾。这里不需要 𝔭 ≠ 𝔭̄，作者特意指出这一点，是对的。当 𝔭 = 𝔭̄ 时，这一步本身就给出矛盾，即自共轭情形。
+
+ - Lemma 4.2 第二步：(O/𝔭)[C_p] ≅ F[T]/(T−1)^p 是局部环，增广非零的元素是单位。F·F* ≡ 0 (mod 𝔭)，其中一个因子是单位，另一个因子的全部系数就在 𝔭 中。F* 的系数是 F 的系数的共轭，所以每个系数 c 满足 c c̄ ∈ 𝔭。正确。
+
+ - §4.3：固定一个 k，Σ_χ |χ(c_k)|² = |H|·Σ_x |c_k(x)|² = |H|²（系数为单位根）。左边每一项是 χ(c_k)·conj χ(c_k)，属于 𝔭，所以 |H|² ∈ 𝔭 ∩ Z = pZ，矛盾。正确。Remark 4.3 指出必须对单个陪集用 Parseval，Remark 4.4 指出只用到了"列范数 = |H| 与 p 互素"，这两点也都正确。
+
+ - p=2、h≡2 (mod 4) 的情形：Q(ζ_h) = Q(ζ_{h/2})，2 不分歧，v_𝔭(|G|) = 1，各步原样成立。我对 X_χ = a + bT 手算核对过：结论化为 a、b 同属 𝔭̄（或同属 𝔭），再由 Parseval 得 |H|² 为偶数，矛盾。
+
+ - 独立计算（我自己写的 C 穷举，首项固定为 1）：
+     (6,6)=0，(10,6)=0，(6,30)=0，(10,10)=0，(12,3)=0，都在定理预言为空的范围内；
+     阳性对照 (6,12)=12，(12,6)=432，(9,3)=54，与 Remark 4.5 和 §9 的数字完全一致。
+   我还重算了 Remark 4.5(b) 引用的 Do Duc 构造条件（DD19b Thm 4.3：p^d ∈ p_1N+…+p_rN），F_5×F_5、h=6 确实满足。原文措辞"|R| is a sum of prime divisors of h"不够准确：条件应是剩余域大小 p^d 属于 Σ p_iN，请改。
+
+结论：Theorem S 及其 p=2 锐化形式成立。证明短而干净，这正是我在"新颖性"一节特别仔细查证的原因。
+
+2.2 Corollary 5.1（Corollary R）
+
+正确。取 x ∈ N、x≠0、p ∤ ord x，以及 ψ 使 ψ(x)≠1。令 φ = ψ^{p^v}，则 φ(x)≠1，且 φ 的阶与 p 互素。截面 σ 的像为 D。对 s≠0，陪集 s̃+N 中每个元素作为 σ(q+s)−σ(q) 恰好出现 λ 次，其他元素不出现，所以自相关为 λφ(s̃)Σ_{u∈N}φ(u) = 0。于是 a = φ∘σ 是 G/N → μ_h 上的完美函数，与 Theorem S 矛盾。证明确实没有用到分裂假设、N 的循环性或 exp(G) 条件。
+
+Example 5.2(b)（C_p×C_4²，N = 2C_4²）参数核对无误。Remark 5.3 的 (12,3,12,4) 反例与结论相容：N 是 3-群。
+
+需要修改的一点：§5.1 的"Comparison with [LSZ23]"说 Corollary R "contains the case p ∤ n of [LSZ23, Thm 6.1, Cor 6.3, Thm 6.5]"，这个说法过于保守。LSZ23 第 6 节研究的 (pn,n,pn,p) RDS 本来就要求 gcd(p,n)=1（Thm 6.2 的假设；Thm 6.1 针对 pq^r，p ∤ q^r）。Corollary 6.3 是"对固定的 n 只有有限多个 p"，而 p | n 的 p 只有有限多个，所以 Corollary R 推出 Cor 6.3 的全部内容。Cor 6.4 同理。准确的说法是：LSZ23 第 6 节的全部不存在性结论都是 Corollary R 的特例。这比原文写的更强，应当明说，因为它是本文意义的主要证据之一。
+
+2.3 Corollary 5.4、5.5（cor:ksw）、5.6
+
+都是 Theorem 4.1 的直接实例，正确。
+
+ - Corollary 5.5：[1,q] 型 GBF 等价于 BH(Z_q,q)；2 ∥ q 且 ν_2(q)=1，满足 p=2 情形的条件。正确。
+ - Corollary 5.6：11 个阶的分解我逐一核对过，每个都含指数为 1 的奇素数（468 = 2²·3²·13 中的 13）。正确。
+ - Lean 标注须说明：Corollary 5.5 与 5.6 在 Lean 中只有一般陈述（no_perfect_sequence_two_mod_four / no_perfect_quaternary_sequence）；"GBF ⟺ 完美序列"的等价（Proposition 3.1）以及 11 个具体实例都没有形式化。"[Lean]" 标注应改为 "follows from a Lean-verified statement"。
+
+2.4 Lemma 5.7（descent bound 等号情形）以及 F(1800)=120、F(3600)=240
+
+ (i) 引理本身：对 t 与 F 互素，D′(ζ_F^t) = D(ζ_F^t) = σ_t(Y)。对全部 t 求和得 φ(F)n ≤ F·Σ(d_i − C/2)² ≤ F²C²/4。取等号要求 d_i ∈ {0,C}，并且 D′ 在所有与 F 不互素的 t 处为零。取奇素数 r | F，D′ 在 C_F/C_r 的全部特征上为零，所以 E 在 Q[C_F/C_r] 中的像为 (r/2)J，不是整系数，矛盾。证明正确。
+
+ (ii) 应用：取 d=N 的特征时 L=N、C=4（4 | N，h_g ∈ μ_4 ⊂ μ_N，且 χ 在 C_N 上是双射，所以每个 c_t ≤ 4）。下降定理（DD19a Result 2.8 = Sch99 Thm 3.5）给出 Xζ_L^j ∈ Z[ζ_F]，F 被 L 的每个素因子整除，所以 1, ζ_L, …, ζ_L^{L/F−1} 是 Q(ζ_L)/Q(ζ_F) 的基，d_i = c_{iL/F−j} ∈ [0,C]。正确。
+
+ (iii) F 值的独立核验：
+  - 我对照 Schmidt 1999 预印本的 Def. 3.1（渲染页面），发现原始定义里 m 为偶数时一律取 m_q = 4∏_{p_i≠2,q} p_i，包括 q=2 的情形。这时 m_2 与 2 不互素，ord_{m_2}(2) 无定义。LS05 Def. 2.6 把条件改为"m odd or q=2"，这就是所谓的"LS2005 fix"。稿件写"[Sch99, Def. 3.1] in the form of [LS05, Def. 2.6]"是正确的。但不能说按 Sch99 原始定义直接得到 120/240，因为原始定义在 q=2 处无意义。建议加一句脚注说明这一点。
+  - 按 LS05 Def. 2.6 手算 N=1800=2³3²5²：m_2=15，m_3=20，m_5=12，ord_15(2)=4，ord_20(3)=4，ord_12(5)=2。p_i=2 时，q=3 要求 3^4−1=80=2^4·5，即 2^{b+1} ∤ 80 ⟺ b≥4 > c=3，所以只能 b_2=c_2=3。p_i=3、p_i=5 时 b=1。F=2³·3·5=120，φ=32，16·120²/(4·32)=1800。N=3600 时 b_2=4，F=240，φ=64，16·240²/(4·64)=3600。
+  - 我另写的 Python 实现（与作者代码无关）给出：F_LS05(1800,1800)=120，F_LS05(3600,3600)=240，F_LS05(165²,165)=9075=3·5²·11²（与 LS05 Example 2.7 一致）。LS12 Def. 2.10 的闭式也给出 120/240。等号确实成立，且 F 含奇素因子，Lemma 5.7 排除这两个阶。数值主张成立。
+
+ (iv) 问题：在我的简化引擎里（只用 d=N 的特征加上 LS05/LS12 的 F），Lemma 5.7 起决定作用的长度在 (1000,10^6] 内有 7 个：1800、3600、6084、12100、12168、14112、24200。正文只提 1800 和 3600（"excludes these two orders"）。这对 ≤5000 的陈述没有影响，但 Corollary 5.8 中 10^5、10^6 的清单同样依赖 Lemma 5.7。请完整列出所有由 Lemma 5.7 决定的长度，并说明它们没有被其他判据排除。
+ (v) 新颖性：Schmidt 界 C²F²/(4φ(F)) 的证明本身就是这个 Parseval 论证。等号分析是否已经出现在 Schmidt LNM 1797 或 Leung–Schmidt 的后续工作中，作者没有核查，请补查。我认为它最多是一个小的细化，不宜在摘要中强调。
+
+2.5 Lemma A（Lemma 6.2）
+
+逐行核查后结论为正确。
+
+ - O_𝔓 = W[ζ]，y = ζ−1 是一致化元，并且 O_𝔓/p ≅ k[y]/(y^{p−1}) 是环同构，所以"数字"定义合理。
+ - 对 i ≤ p−2，C(N,i) mod p 只依赖 N mod p，且是 N 的 i 次多项式，所以 c_t(j) 是 j 的 ≤t 次多项式。这里用到 ja 只在模 p 意义下有定义，这一点没有问题。
+ - α+β ≤ p−1。α=0 与 β=0 两种情形分别处理，正确。
+ - 当 1 ≤ α,β ≤ p−2 时，p 的赋值为 p−1 > α，所以 a(j) ≥ α 推出 c_t ≡ 0（t<α）。c_α 的次数 ≤ α，所以最多有 α 个 j 使 a(j) > α；β 同理。由于 α+β < p，存在 j_0 使两者同时取最小值，从而 α+β = p−1，且 a 在所有 j 上恒为 α。
+ - 首位数字：c_α d_β − κ 的次数 ≤ p−1，在 F_p 的全部 p 个点上为零，所以是零多项式。于是 c_α 是常数。
+
+结论成立，包括 j=0 的比较。Remark 6.3(b) 的反例 F = p−2J 正确。
+
+Lean 对照：lemmaA 的陈述只覆盖 n ∈ Z、p ∥ n 的情形，而正文 Lemma 6.2 是对 n ∈ O、v_𝔓(n) = p−1 陈述的。§8 已经承认这一点，但 Lemma 6.2 末尾的 "[Lean]" 标注会误导读者，应改为 "[Lean, for n ∈ Z]"。除此之外 Lean 陈述与正文一致：任意 P | p、任意第二因子 v、卷积形式 FV = n、结论为 "∈P^α ∧ ∉P^{α+1} ∧ 差 ∈ P^{α+1}"。
+
+2.6 Theorem B（Theorem 6.4）
+
+正确。
+
+ - Step 2：Z[ζ_pq] 中 p 上方素理想的分歧指数为 p−1，v_𝔪(n) = p−1，所以可以用 Lemma A（d=q）。
+ - Step 3：A[ρ] 就是 B_𝔪，因为 q 在 Q(ζ_pq)/Q(ζ_p) 中全分歧，𝔪 是唯一的上方素理想。Lemma 3.6 的归约 ϖ(Φ_{q^e}) = q 正确。f ≥ 2 推出 e ≥ 2，所以 ρ 经 C_{q^{e−1}} 分解。
+ - Step 4：Lemma 3.4 取 L=pq，4 个值的 𝔪-赋值都等于 v_𝔪(n)/2。
+ - Step 5：用 Kronecker 定理，加上在 p 与 q 上方的剩余均为 1，推出阶既是 p 的幂又是 q 的幂，所以 Δ=1；p=2 或 q=2 时同样成立。
+
+Lean 只覆盖 n = pq^e，并且是在 Theorem C 的证明内部，这一点已经说明。
+
+2.7 Theorem C（Theorem 6.6）
+
+正确。
+
+ - x = ϖ_u(h)，xx* = pq^eu 是 admissible 的。由 Theorem B 推出 ϖ_q(g_j) = κ_jϖ_q(g_0)，所以 E = ϖ_q(H_0) 满足 EE* = c_0c̄_0·pq^eu，是一个标量。
+ - E 的每个系数是 q^{e−1}u 个 μ_p 元素之和，模 λ 同余于 q^{e−1}u。复共轭在 Z[ζ_p]/λ 上是恒等映射，所以 ẼẼ* = q^{2e−1}u²J_q，在 C_q 的每个元素上都非零（p ∤ qu，q ≥ 2）。但 EE* 是 Z[ζ_p][C_q] 中的标量，非单位元处的系数模 λ 应为零，矛盾。
+ - 论证在 e、u 上一致成立。Corollary 6.7 的约化（exp(G) | m 推出 Sylow-p 是初等交换群，N 是直和因子）正确。
+
+Lean：not_exists_perfect_prime_power_phase 的陈述（p≠q 均为素数、e≥1、ZMod(pq^e) → ℂ、a^p = 1、自相关 Σ a_j·conj(a_{j+τ}) = 0）与 Theorem 6.6(i) 完全一致。这里的自相关是正文形式的复共轭，两者等价。
+
+2.8 我独立复跑的 Lean 检查（使用已构建的 .olean；我核对过 .olean 比源文件新）
+
+#print axioms 的结果：no_perfect_function、no_perfect_sequence、no_perfect_quaternary_sequence、no_perfect_function_sharp、no_perfect_sequence_sharp、no_perfect_sequence_two_mod_four、RamifiedComparison.lemmaA、not_exists_perfect_prime_power_phase，以及发布包中的 TheoremS/RDS.lean 里的 no_semiregular_rds，全部只依赖 [propext, Classical.choice, Quot.sound]。grep 没有找到 sorry、admit、native_decide 或新的 axiom。行数 784（Sharp 172）和 2338 与正文一致。
+
+第 4.5 节引用的陈述与源码逐字一致。h=0 的退化情形被 ¬p∣h 或 ¬4∣h 排除，没有空洞真的风险。Corollary R 的 Lean 陈述（π 满射由截面保证；hrds 只对 g ∉ ker π 要求恰好 λ 次；"N 不是 p-群"表述为存在 x ∈ ker π、x≠0、p ∤ ord x）与正文等价。
+
+需要修正的事实问题：
+ (a) TheoremS/ 在 openai-math/lean 仓库中是未跟踪目录（git status 显示 ??），既没有提交也没有公开。正文自己也写了 "not yet released"。期刊论文中写 "[Lean]" 时，必须给出公开、可构建的制品（commit hash、lake-manifest、构建日志）。
+ (b) §8 说 no_semiregular_rds 在 reviews/E-coding/NEWTHEORY/verifyNonsplit/RDSCorollary.lean，而发布包里放在 TheoremS/RDS.lean。两处须统一。
+ (c) Theorem C 的 Lean 证明依赖 [Ope26] 附带的 Lean 开发（actual_local_character_association 等）。该开发同样必须固定版本并公开。
+
+======================================================================
+3. 新颖性（尽力扮演反方）
+======================================================================
+
+我按"S′ 是否其实是 folklore，或已隐含在已有工具里"的思路，逐条检验。
+
+(1) Ma 引理 [Ma85; Pot95 Lemma 1.5.1; DD19a Result 2.4]。
+Ma 引理的输入是"全部（相关）特征值被 p^t 整除"，输出是群环分解 p^tX + PY。在非自共轭情形下，单个特征值根本不被 p 整除，所以 Ma 引理无法启动。Theorem S 的列引理在 O[C_p]/𝔭 中用的是同一个局部环事实，但作用对象不同：它不针对 G 的全部特征，只针对 H 的特征，并保留 C_p 作为变量。若要从 Ma 引理"推出" S，需要的正是作者给出的两步：把结论推进到系数层，再对单个陪集用 Parseval。所以我不认为 S 隐含在 Ma 引理中，不过二者确实是近亲。作者的说法"local form of Ma's lemma"是恰当的。
+
+(2) Pott, LNM 1601, Thm 4.1.1（exp(G) | m）。
+它与 S 互不蕴含：Example 5.2(b) 中 exp(G) | m 成立，而 Corollary R 仍然给出不存在。但作者承认没有读过 Pott 第 4 章全文，必须补读。第 4 章收集了 RDS 中关于 Sylow 子群和 forbidden subgroup 的条件，是最可能出现 "p ∥ m ⇒ N 为 p-群" 一类陈述的地方。
+
+(3) Leung–Schmidt 学派。
+这是最强的反证据，而它指向"新"：
+ - LSZ23（JCTA 2023，作者之一是 Schmidt）的 Lemma 3.11 是 S 的"特征值影子"。他们的 Thm 6.2 的证明已经写出 D = ΣD_i g^i 这一分解，却没有推进到系数层。他们在 2023 年仍把 (39,13,39,3)（即 BH(C_39,13)）标为 "?"。
+ - LS19（JCTA 163）用了几十页的新工具，只得到 q = 2p^a 时"m ≠ 1"。
+ - YD26 在 2026 年仍在逐族处理 [1, 2·3^a7^b]。
+如果 S 是这一学派的 folklore，上述工作都不会以现在的形式存在。
+
+(4) Arasu–de Launey–Ma [AdLM02]。
+Ara11 Thm 4.7 只对阶 2tp（p ≡ 1 (mod 4)）得到界 t ≥ p/(α+1)，而这正是 p ∥ N、p ∤ 4 的情形。所以 ADM 并不掌握 S。不过作者承认没有读过 AdLM02 全文，只看过 Ara11 的转述。ADM 中关于"divisibility by f(ζ_w)"的 Lemma 4.8 是理想版的 Ma 引理，与列引理距离最近，必须读原文后才能下结论。
+
+(5) KSW / 广义 bent 文献。
+KSW Prop. 6、Ikeda 1999、Feng–Liu、LS19、YD26 都依赖自共轭或界条件，没有人陈述过 m=1 的一般结论。LYZ26（arXiv 2607.24103）Prop. 1.3 用到了"2 在 Q(ζ_N) 中不分歧推出 v_𝔭(q)=1"，但只用来说明 Fourier 系数不是单位根，没有得出不存在性。这一点值得在正文中点明，因为它是最接近的近邻。
+
+(6) 网络检索（2026-10-09）。
+我检索了 "p∥|G|, p∤h" 型的群不变 BH 或完美序列不存在性，以及 semi-regular RDS 中"forbidden subgroup must be a p-group"的陈述，都没有找到先例。检索中发现、稿件尚未处理的近邻有：
+ - Leung–Chue–Zhao, DCC 93 (2025)（LCZ25）："there is essentially only one Butson matrix over a group of prime order"，即 BH(Z_p,h) 单项等价于 Fourier 矩阵，对任意 h 成立。它覆盖 Theorem S 中 H=1 的情形，正文 Remark 4.6 只引了 DDS19 a=1。此外 LCZ25 给出"cyclic Butson matrices of order 2p 的必要条件"，可能与 S 在 n=2p 时重叠。LCZ25 在参考文献中，但作者自述没有读过。这是必须补读的文献，并且必须说明 S 在 n=2p 时是否新。
+ - Mow 1995 猜想（K.-U. Schmidt 综述 arXiv 1602.03722 的 Conj. 4.1.1）：长度 n 的 H-相完美序列存在，当且仅当 √(rn)（n≡2 (mod 4) 时为 2√(rn)）整除 H，其中 r 为 n 的无平方部分。S 证明的正是 Mow 猜想必要性方向中"r 的素因子整除 H"这一部分，并且对 n≡2 (mod 4) 给出 4 | H 中的因子 2。Mow 猜想比 Do Duc Conj. 3.1 早二十多年，更出名，稿件完全没有提到，这是一个明显的引用遗漏。
+ - Leung–Wang（DCC 2020）与 Leung–Li–Mao（JCTA 2023）研究 Z_2^n → Z_m 的 GBF。它们与 S 不重叠（v_2(|G|) = n ≥ 3），但同属"非自共轭不存在性"文献，应当引用。Zhang–Ge 2018（JACo）关于 gcd(m,n)=1 的 (mn,n,mn,m) RDS 已经在 refs.bib 中，正文却没有引用。
+
+(7) 我的判断。
+S 很可能确实是新的。以 JCTA 的标准，它的意义在于：一个半页的论证同时关闭了 KSW 遗留问题的 m=1 情形、Do Duc 猜想 (ii) 的必要性、Arasu 列表、LSZ23 第 6 节全部内容以及若干篇专门论文的主定理。这是很有价值的"简短证明解决公开问题"型结果。但是作者自己列出没读的文献（AdLM02、Ma96、MN09、LCZ25、Pott95、dLF11），恰恰是最可能含有 S 或其循环特例的地方。正文还留着 "[TODO: update after reading ADM 2002 and Ma 1996 in full.]"。在这些文献核查完之前，"To our knowledge Theorem S has not been stated before" 不足以支撑摘要中的措辞。这是我把建议定为 major 而非 minor 的主要理由之一。
+
+Lemma A：它是 LSZ23 Lemma 3.11 和 Feng09 Lemmas 2–3 的真正细化（允许系数含 ζ_p，并给出剩余陈述）。数字多项式加 F_p 上点数计数这一手法，我没有见过已发表的类比。
+Theorem C：p 奇、e ≥ 2 的情形（如 (56,7)、(99,11)、(605,5)）不被 Feng09 Prop. 8（q^e 须为模 p 平方剩余，e 偶时自动满足）或 LSZ23 Thm 5.1/5.4 覆盖。我的核对：对 (99,11)，LSZ Thm 5.4(ii) 的条件是 5 > 5，不成立，正文这样说是对的。所以 Theorem C 在这一子族上是新的，但范围窄。
+
+======================================================================
+4. 数值主张的可复现性（独立抽查）
+======================================================================
+
+(a) Do Duc 列表：用 novelty/lit/DoDuc_BH_open_cases.txt（2687 对，无重复，n,h ≤ 100），我自己的脚本得到：
+   存在 p ∥ n 且 p ∤ h 的对：2262；
+   另外由 p=2、n ≡ h ≡ 2 (mod 4) 排除的对：61；
+   剩余：364。
+   与正文完全一致。61 对的名单与 CONDII-PRIOR.txt 一致。我抽查了"5 对属于 2 自共轭情形"中的 (6,66)（2^5 ≡ −1 mod 33）和 (18,22)（2^15 ≡ −1 mod 99），都成立。
+   保留意见：
+   (i) 该列表文件是转录本，正文须说明来源（DD19a Remark 3.13 所引的具体文件或 URL），并附上比对哈希。
+   (ii) "约 50 对此前未被任何结果排除"只对 61 对做了逐项扣减，对 2262 对没有做同样的扣减。列表并不闭合于既有文献：(10,4) 已被 Turyn 排除，(14,7) 是 Ma–Ng 2p^s 族的情形。因此摘要中 "closes 2323 of the 2687" 应改为 "excludes 2323 of the 2687 pairs listed as open in [DD19a]"，并给出相对既有文献的真正新增数，至少给出 p 为素数字母表的子类（Ma–Ng pq、2p^s；LSZ Thm 6.5；Turyn 2p^a）扣减后的下界。
+
+(b) LSZ23 的 "?"：我从 LSZ23 终稿文本直接核对。Table 1 中为 n = 24、96、98；Table 2 中为 12、13、39、48；Table 3 中为 12、20、48、49、80、98，共 13 个。正文所称 8 个可判定（24、96；13、39；12、20、48、80），对应素数 3、3；3、13；3、5、3、5，逐一验证无误。其余 5 个没有指数为 1 的素数，结论正确。
+
+(c) Arasu 列表：11 个阶的分解正确，每个都含指数为 1 的奇素数。
+
+(d) 四元长度（Corollary 5.8）：我用独立的简化引擎复现（判据：两平方和、2^a、奇素数对 lcm(4,N) 自共轭、d=N 特征的 Schmidt 界加 Lemma 5.7、Theorem S；N ≤ 1000 部分改用 Arasu 的 remark）。得到：
+   ≤5000：只剩 3528、4900；
+   ≤10^5：共 11 个，名单与正文逐个相同；
+   ≤10^6：共 23 个，名单与正文逐个相同。
+   "Theorem S 在经典判据之后额外排除 5604 个"也可以复现：我在 (1000, 10^5] 得到 5596，加上 Arasu 列表中 8 个 ≡0 (mod 4) 的阶，等于 5604。对 N ≤ 1000，若不使用 Arasu 的 remark，我的简化引擎会剩下 72、100、144、784。正文依赖 Ara11 的 remark 排除它们，这没有问题，但须明说。
+   另一个问题是"Turyn's argument with Ma's lemma"这条判据太含糊：一个自共轭奇素数为什么能排除整个 N，须给出精确陈述和出处。§5.4 也应说明 Lemma 5.7 在 5000 以上的作用（见 2.4(iv)）。
+
+(e) Yayla 表：(39,13)、(55,11)、(63,3)、(84,3) 分别用素数 3、5、7、7，核对无误；(56,7) = 7·2³ 与 (99,11) = 11·3² 落在 Theorem C 的范围内（e = 3、2）。CALIBRATION 指出的 5 个旧结果（FX08、LSZ23）都已如实归属。
+
+(f) 本次没有复现的计算：Example 6.1 的 400 条 μ_10 序列、Remark 6.5(b) 的抽样统计、§6.5 的三型计数、Remark 6.8(b) 的 11,854,080 个阵列。它们只用于例证，不影响任何定理，但须进入公开制品。§9 自己留着 "[TODO: package as an artifact …]"，正文里写的仍是工作目录路径，这在期刊稿件中不可接受。
+
+======================================================================
+5. 写作与结构
+======================================================================
+
+(1) 稿件仍是草稿：作者名、地址、邮箱都是占位符；PDF 中留有 5 处 [TODO]（§2 新颖性、§6.4、§8、§9 两处、§10）；正文多次出现工作目录路径（reviews/E-coding/NEWTHEORY/…）。
+
+(2) 过度主张或无证主张：
+ - §5.4 末尾写 "all lengths N≡2 (mod 4), N>2, are excluded by an adaptation of the alternating-product method of [Ope26] [179-Prop], which we do not reproduce here"。这是没有证明的主张，必须删除或给出证明。
+ - Part III 整体是"one paragraph each, without full proofs"（τ-descent、W-criterion、二阶 2-adic 奇偶律等），还带有 "[179-Lem]" 标签。JCTA 不接受无证明的结果陈述。建议删去 Part III，或另文发表；若保留，只留一个指向它们的 remark。
+ - 摘要和引言中 "closes 2323 … cases" 见 4(a)。
+ - Lemma 6.2、Corollary 5.5、5.6 的 [Lean] 标注须加限定（见 2.3、2.5）。
+ - §7 开头 "Before Theorem S was found … in our work" 是研究过程的叙述，不属于论文内容。
+
+(3) 依赖未审稿文献：Theorem C 用到 [Ope26] 的 Lemmas 2.1、3.1、3.3。作者已经重新证明了它们，所以数学上自洽，这一点很好。但标签体系（[179-Lem]、[179-Prop]、item 179 of the OpenAI Math release）对 JCTA 读者没有意义，建议去掉，直接引用重证的 Lemma 3.5–3.7。
+
+(4) 结构：核心结果（Theorem S 加若干推论）大约 8 页即可完整呈现，现在被 24 页的材料稀释了。建议的结构是：Theorem S → Corollary R、Do Duc/Mow、KSW、Arasu/LSZ/Yayla → Lemma A 与 Theorem C → 计算与形式化附录。Table 1 的 "Method" 一栏对 Turyn 等人的描述过于简化，可以删去这一栏。
+
+(5) 缺失的引用：Mow 1995 猜想（以及 K.-U. Schmidt 的序列综述）；LCZ25 的具体内容；Leung–Wang 2020、Leung–Li–Mao 2023；Zhang–Ge 2018（已在 bib 中但未引用）；Schmidt 界 C²F²/(4φ(F)) 的精确出处（JAMS 版定理号；预印本 Thm 4.2 是较弱的 2^{s−1}C²F 形式，两者不同）。
+
+(6) 小问题：
+ - Remark 4.5(b) 对 DD19b Thm 4.3 的转述不准确（见 2.1）。
+ - §5.6(3) 关于 Lv17 的论证（ord_p(q) | (p−1)/2 推出 q 是二次剩余，所以 q ∤ n′）是对的，但应写出 "p ∤ n′" 的来源。
+ - Corollary 6.9 中 "605 is the only length ≤4000 …" 带着 TODO，没有独立核实，应删去或核实后保留。
+
+======================================================================
+6. 建议
+======================================================================
+
+建议：Major revision（大修）。
+
+理由（按 JCTA 的尺度）：
+ - 数学核心正确，我逐行核查过，Lean 公理检查也独立复跑通过。Theorem S 及其 p=2 锐化本身达到 JCTA 的发表水平：一个初等、可形式化的论证，一次性关闭了 KSW 问题的 m=1 情形、Do Duc 猜想 (ii) 的必要性、LSZ23 第 6 节全部结论以及 Arasu 的 11 个阶。按这一领域的惯例，这样的贡献应当发表，它比若干篇已发表的逐族论文都更有力。Lemma A 与 Theorem C 是有价值的补充，但份量较小。
+ - 之所以不给 minor：
+   (i) 新颖性核查不完整，最关键的近邻（AdLM02、Ma96、MN09、LCZ25、Pott95 第 4 章）作者自述没有读过，而且漏引了 Mow 猜想；
+   (ii) 稿件处于草稿状态（TODO、占位符、工作路径），形式化与计算制品没有公开；
+   (iii) 含有无证明的主张（[179-Prop] 的 N≡2 (mod 4) 结论、Part III）；
+   (iv) 部分计数（2323、"~50"）的口径需要重新表述。
+ - 之所以不给 reject：上面这些都是可以修好的问题，没有一处触及主要定理的正确性。
+
+如果补读文献后发现 S 的循环情形已经出现在 AdLM02、Ma96、MN09 或 LCZ25 中，稿件的定位就要改成"统一与推广（任意交换群、p=2 锐化、RDS 非分裂、形式化）"。那时仍可以考虑发表，但摘要和引言须相应大改。
+
+======================================================================
+7. 修改清单（按严重程度排序）
+======================================================================
+
+【严重 / 必须】
+ S1. 读 AdLM02、Ma96、MN09、LCZ25 全文，以及 Pott LNM 1601 第 4 章、de Launey–Flannery 中的相关章节。在 §2 明确说明 S（及其循环特例、n=2p 特例）是否出现过，删去 TODO。LCZ25 的 n=2p 必要条件须与 S 正面对照。
+ S2. 补引 Mow 1995 猜想（以及 K.-U. Schmidt 综述的 Conj. 4.1.1），说明 S 证明了它必要性方向的哪一部分。H=1 情形补引 LCZ25。
+ S3. 删去或证明 §5.4 末尾关于 "all N≡2 (mod 4) excluded [179-Prop]" 的主张。Part III 删去，或只保留有完整证明的内容。
+ S4. 公开并固定 Lean 制品（commit hash、lake-manifest、构建日志、#print axioms 输出），包括它依赖的 [Ope26] Lean 开发。统一 no_semiregular_rds 的位置。
+ S5. 公开计算制品（脚本、日志、机器描述），替换全部工作路径；Do Duc 列表须注明来源，并附校验和。
+
+【重要】
+ I1. 把 "closes 2323 of 2687" 改为 "excludes 2323 of the 2687 pairs listed in [DD19a]"，并对 2262 对给出相对既有文献的扣减（至少扣除 Turyn 2p^a、Ma–Ng pq/2p^s、LSZ Thm 6.5、Lv 等已知族），与对 61 对的处理口径一致。
+ I2. §5.1 中写明 Corollary R 推出 LSZ23 第 6 节的全部结论（Thm 6.1、6.2、Cor 6.3、6.4、Thm 6.5），而不只是 "the case p ∤ n"。
+ I3. Lemma 5.7：完整列出它在 Corollary 5.8 各范围内起决定作用的长度（我的独立实现得到 (1000,10^6] 内为 1800、3600、6084、12100、12168、14112、24200）；核查等号分析是否已见于 Schmidt LNM 1797 或 LS05；给出 C²F²/(4φ(F)) 界的精确出处；脚注说明 Sch99 原始 Def. 3.1 在 m 为偶数、q=2 时无定义，以及 LS05 的修正。
+ I4. 精确陈述 Corollary 5.8 使用的每一条经典判据（特别是 "Turyn's argument with Ma's lemma"），并给出出处。
+ I5. 修正 [Lean] 标注：Lemma 6.2 改为 "Lean, n ∈ Z"；Corollary 5.5、5.6 改为 "follows from Lean-verified statements"。
+ I6. 删去 [179-Lem]/[179-Prop] 标签体系，改为引用正文中的 Lemma 3.5–3.7。
+
+【次要】
+ m1. 补引 Leung–Wang 2020、Leung–Li–Mao 2023、Zhang–Ge 2018；在 KSW 一节提到 LYZ26 Prop. 1.3 与本文论证的距离。
+ m2. 改正 Remark 4.5(b) 对 DD19b Thm 4.3 条件的转述。
+ m3. Corollary 6.9 / §6.4 中 "605 is the only length ≤4000 …" 核实后保留，否则删去；§10(4) 的 TODO 同样处理。
+ m4. 去掉 §7 的研究过程叙述；精简 Table 1；补全作者、地址等信息。
+ m5. 统一术语：正文中 Theorem S / S′ 的称呼与 Lean 命名（no_perfect_function_sharp）对齐，并在引言中说明 S′ 即 p=2 的锐化。
+
+—— Referee 1

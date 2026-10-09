@@ -1,0 +1,290 @@
+% ===========================================================================
+\section{Consequences}\label{sec:cons}
+% ===========================================================================
+
+\subsection{Relative difference sets}
+
+A $k$-subset $D$ of a group $G$ of order $mn$ is an
+\emph{$(m,n,k,\lambda)$-relative difference set} (RDS) relative to a
+subgroup $N$ of order $n$ if $DD^{(-1)}=k+\lambda(G-N)$ in $\Z[G]$
+\cite{Pott1995}; it is \emph{semi-regular} if $k=m$.
+
+\begin{corollary}\label{cor:R}
+Let $G$ be a finite abelian group, $N\le G$ a subgroup with $|N|=n$ and
+$|G/N|=m$, and let $D$ be a semi-regular $(m,n,m,m/n)$-RDS in $G$
+relative to $N$. If a prime $p$ satisfies $p\,\|\,m$, then $N$ is a
+$p$-group. \deptag{Lean}
+\end{corollary}
+
+\begin{proof}
+Suppose $N$ is not a $p$-group. A semi-regular RDS meets every coset of
+$N$ exactly once; let $\sigma:G/N\to G$ be the section with image $D$, and
+$\lambda=m/n$. Choose $x\in N$, $x\ne0$, with $p\nmid\ord x$, and
+$\psi\in\widehat G$ with $\psi(x)\ne1$. Let $p^v\,\|\,|G|$ and
+$\varphi=\psi^{p^v}$. Then $\varphi(x)\ne1$, since $p^v$ is prime to the
+order of $\psi(x)$, and the order of $\varphi$ divides $h:=|G|/p^v$,
+which is prime to $p$. Put $a(q)=\varphi(\sigma(q))\in\mu_h$ for $q\in
+G/N$. For $s\ne0$ in $G/N$, every $g$ in the coset $\tilde s+N$ of $s$
+is a difference $\sigma(q+s)-\sigma(q)$ for exactly $\lambda$ values of
+$q$, and no other element is, so
+\[
+ \sum_{q\in G/N}a(q+s)\conj{a(q)}=\lambda\sum_{g\in\tilde s+N}\varphi(g)
+ =\lambda\,\varphi(\tilde s)\sum_{u\in N}\varphi(u)=0 ,
+\]
+because $\varphi$ is a nontrivial character of $N$. Thus $a$ is a perfect
+function $G/N\to\mu_h$ with $p\,\|\,|G/N|$ and $p\nmid h$, which
+Theorem~\ref{thm:S} excludes.
+\end{proof}
+
+\begin{example}\label{ex:R}
+Let $p$ be an odd prime, $G=C_p\times C_4^2$ and $N=2C_4^2\cong C_2^2$, so
+$n=4$ and $m=4p$. Here $N$ is not a direct factor of $G$ and
+$\exp(G)=4p$ divides $m$, so neither a splitting hypothesis nor the
+exponent bound \cite[Thm.~4.1.1]{Pott1995} applies; Corollary~\ref{cor:R}
+(with the prime $p$) excludes a semi-regular $(4p,4,4p,p)$-RDS in $G$
+relative to $N$. For $p=5$ an exhaustive search finds none \deptag{Comp}.
+\end{example}
+
+The conclusion cannot be strengthened to ``no such RDS'': in
+$C_2^2\times C_3^2$, relative to a subgroup of order $3$, there are
+semi-regular $(12,3,12,4)$-RDS, the case $p=2$, $t=1$ of the family of
+Davis, Jedwab and Mowbray \cite{DavisJedwabMowbray1998} (as recalled in
+\cite[Sect.~1]{LeungSchmidtZhang2023}); here $3\,\|\,12$ and $N$ is a
+$3$-group.
+
+\paragraph{Comparison with \cite{LeungSchmidtZhang2023}}
+In the notation of \cite{LeungSchmidtZhang2023}, an $(mn,n,mn,m)$-RDS
+has a forbidden subgroup of order $n$ and $|G/N|=mn$. If $p\nmid n$ and
+$n\ge2$, then $p\,\|\,pn=|G/N|$ while $N$ is not a $p$-group, so
+Corollary~\ref{cor:R} shows that no abelian $(pn,n,pn,p)$-RDS exists.
+Hence Corollary~\ref{cor:R} contains every nonexistence statement of
+\cite[Sect.~6]{LeungSchmidtZhang2023}, which is about such RDS:
+Theorem~6.1 (for all distinct primes $p,q$ and $r\ge1$, without any of
+its conditions (a)--(c)); Theorem~6.2, whose hypotheses ($n>1$ prime to
+$p$) already exclude the RDS; Corollary~6.3, in the stronger form that an
+abelian $(pn,n,pn,p)$-RDS with $n\ge2$ can exist only if $p\mid n$;
+Corollary~6.4, in the range $\gcd(p,n)=1$, $n\ge2$, in which it is
+derived there from Theorem~6.2;\footnote{Read literally, the hypothesis
+of \cite[Cor.~6.4]{LeungSchmidtZhang2023} also admits $n=1$ and some $n$
+divisible by $p$, where it is not covered by its proof.} and Theorem~6.5,
+without the assumptions that $p,q$ are odd and $\gcd(p,q-1)=1$. This
+includes the theorem of Ma \cite{Ma1996} on $(pq,q,pq,p)$-RDS with
+$p>q$, as stated in \cite[Sect.~1]{LeungSchmidtZhang2023}. For RDS
+whose index is divisible by $p$ exactly once and whose forbidden subgroup
+is divisible by another prime, Corollary~\ref{cor:R} is the case $b=1$ of
+\cite[Thm.~5.1(a)]{LeungSchmidtZhang2023} without its self-conjugacy
+condition. It decides the following entries marked ``?'' in the tables of
+\cite{LeungSchmidtZhang2023}: Table~1, $(2n,n,2n,2)$, $n=24,96$ (prime
+$3$); Table~2, $(3n,n,3n,3)$, $n=13$ (prime $3$) and $n=39$ (prime $13$);
+Table~3, $(4n,n,4n,4)$, $n=12,20,48,80$ (primes $3,5,3,5$). The other
+five entries marked ``?'' have no prime dividing $|G/N|$ exactly once.
+
+\subsection{The conjectures of Mow and of Do Duc}
+
+\begin{corollary}\label{cor:doduc}
+Let $G$ be a finite abelian group of order $n$ and suppose that a
+$\BH(G,h)$ exists. Then
+\textup{(i)} $p\mid h$ for every prime $p$ with $\nu_p(n)=1$, and
+\textup{(ii)} $\nu_2(h)\ge2$ if $n\equiv2\pmod4$.
+\deptag{Lean}
+\end{corollary}
+
+\begin{proof}
+(i) is Theorem~\ref{thm:S} with $p\nmid h$. (ii) If $n\equiv2\pmod4$, then
+$2\,\|\,n$; if $\nu_2(h)\le1$, then $2$ is unramified in $\Q(\zeta_h)$ and
+Theorem~\ref{thm:S} applies with $p=2$.
+\end{proof}
+
+In Mow's formulation this is the necessity of the factor $p$ of
+$\sqrt{rn}$ for every prime $p$ with $\nu_p(n)=1$ and of the factor $2$
+for $n\equiv2\pmod4$. Corollary~\ref{cor:squarefree} follows, since for
+square-free $n$ conditions (i), (ii) say $n\mid h$ and, for even $n$,
+$4\mid h$, and these suffice by \cite[Cor.~2.5]{DucSchmidt2019} (see also
+\cite[Result~4.1]{DoDuc2019}). Before, the
+necessity of (ii) was known for $n=2$ \cite[Thm.~3.6]{DucSchmidt2019},
+$h=2$, $n=2p^c$ with $h=2p^b$ \cite[Cor.~3.12]{DoDuc2019}, and when $2$
+is self-conjugate modulo the odd part of $h$ (Turyn's argument
+\cite{Turyn1965}; \cite[Prop.~6]{KumarScholtzWelch1985}).
+
+\paragraph{Do Duc's list}
+Of the $2687$ pairs $(n,h)$, $n,h\le100$, listed as open in
+\cite[Remark~3.13]{DoDuc2019}, Theorem~\ref{thm:S} excludes $2323$:
+$2262$ with a prime $p$, $\nu_p(n)=1$, $p\nmid h$, and $61$ further pairs
+with $n\equiv h\equiv2\pmod4$ \deptag{Comp}, leaving $364$ pairs such as
+$(18,8)$ and $(50,4)$. The list is not closed under earlier results, so
+we checked the $2323$ pairs against the earlier criteria we could
+identify: Turyn's
+self-conjugacy argument applied to the principal character (if a prime
+$p$ with $\nu_p(n)$ odd is unramified in $\Q(\zeta_h)$ and self-conjugate
+modulo $h$, then $|\chi_0(X)|^2=n$ is impossible in $\Z[\zeta_h]$); the
+case $h=4$, by Arasu's survey \cite[Remark after Thm.~4.11]{Arasu2011};
+prime $h$, by Yayla's table \cite[Table~2]{Yayla2016} together with
+\cite{FengXiang2008} and \cite[Thm.~6.5]{LeungSchmidtZhang2023}; the
+computations of Hiranandani and Schlenker for $n,h\le15$
+\cite[Table~1]{HiranandaniSchlenker2016}; and the results on generalized
+bent functions of type $[1,q]$ recalled in Section~\ref{ssec:ksw}. They
+cover $237$ of the $2262$ pairs (e.g.\ $(10,4)$ \cite{Turyn1970} and
+$(24,4)$) and $23$ of the $61$ pairs. We also applied Schmidt's
+field-descent bound \cite{Schmidt1999,LeungSchmidt2005} to the remaining
+pairs, in the form (C4) of Appendix~\ref{app:quaternary} (a character
+of order $d$ for every $d\mid n$, $L=\operatorname{lcm}(h,d)$,
+$C=nh/L$), with both descent exponents \cite[Def.~2.6]{LeungSchmidt2005}
+and \cite[Def.~2.10]{LeungSchmidt2012}: it excludes none of them
+\deptag{Comp}. The remaining $2025+38=2063$ pairs are not excluded by any
+result known to us, subject to \cite{LeungChueZhao2025}
+(Section~\ref{sec:prior}): $463+11=474$ of them have $n=2p$ with $p$ an
+odd prime, $17$ of these with $n=6$. Examples with $n\ne2p$ are
+$(15,12)$, $(21,9)$, $(39,13)$, $(30,16)$ and $(30,90)$. Our list of
+earlier criteria is not claimed to be complete.
+
+\subsection{Generalized bent functions of type $[1,q]$}\label{ssec:ksw}
+
+A generalized bent function of type $[m,q]$ is a function
+$\Z_q^m\to\Z_q$ with all Fourier coefficients of absolute value
+$q^{m/2}$, i.e.\ a $\BH(\Z_q^m,q)$. Kumar, Scholtz and Welch
+\cite{KumarScholtzWelch1985} constructed them unless $m$ is odd and
+$q\equiv2\pmod4$. For $m=1$, Theorem~\ref{thm:S} applies with $p=2$:
+
+\begin{corollary}\label{cor:ksw}
+For every $q\equiv2\pmod4$ there is no generalized bent function of type
+$[1,q]$, i.e.\ no perfect sequence of length $q$ over $\mu_q$.
+\deptag{Lean-derived}
+\end{corollary}
+
+\noindent In Lean only the general statement
+\path{no_perfect_sequence_two_mod_four} is verified; the translation to
+generalized bent functions is not formalized.
+
+As stated in \cite[Sect.~1]{YingDeng2026}, \cite[Sect.~1]{Arxiv260724103}
+and \cite[Sect.~1]{LvZhu2018} (we have not seen the full texts of
+\cite{Pei1993,Ikeda1999,Feng2001,LiuMaFeng2002,FengLiu2003b}), the case
+$m=1$, $q=2N$, was treated for $2$ self-conjugate modulo $N$
+\cite[Prop.~6]{KumarScholtzWelch1985}, $N=7$ \cite{Pei1993}, every prime
+divisor of $N$ self-conjugate modulo $N$ \cite{Ikeda1999}, $N=p^l$ and
+$N=p_1^ap_2^b$ under congruence conditions
+\cite{Feng2001,LiuMaFeng2002,FengLiu2003,FengLiu2003b}, $N=p^a$
+\cite{LeungSchmidt2019}, and $N=3^a7^b$ \cite[Thm.~5]{YingDeng2026};
+Corollary~\ref{cor:ksw} contains these statements as stated there. The
+closest argument we found is \cite[Prop.~1.3]{Arxiv260724103}, which uses
+that $2$ is unramified in $\Q(\zeta_N)$ to show that certain Fourier
+coefficients are not roots of unity. For odd $m\ge3$, $2^m\mid q^m$ and
+Theorem~\ref{thm:S} says nothing; \cite{Arxiv260724103} constructs
+functions of type $[m,q]$, e.g.\ $[3,14]$.
+
+\subsection{Circulant complex Hadamard matrices}
+
+\begin{corollary}[Arasu's list]\label{cor:arasu}
+There is no circulant $\BH(N,4)$ for $N\in\{260$, $340$, $442$, $468$,
+$520$, $580$, $680$, $754$, $820$, $884$, $890\}$.
+\deptag{Lean-derived}
+Consequently, by \cite[Remark after Thm.~4.11]{Arasu2011}, a circulant
+complex Hadamard matrix of order $N\le1000$ exists only for
+$N\in\{1,2,4,8,16\}$.
+\end{corollary}
+
+\begin{proof}
+$260=2^2\cdot5\cdot13$, $340=2^2\cdot5\cdot17$, $442=2\cdot13\cdot17$,
+$468=2^2\cdot3^2\cdot13$, $520=2^3\cdot5\cdot13$, $580=2^2\cdot5\cdot29$,
+$680=2^3\cdot5\cdot17$, $754=2\cdot13\cdot29$, $820=2^2\cdot5\cdot41$,
+$884=2^2\cdot13\cdot17$, $890=2\cdot5\cdot89$: each has an odd prime
+divisor of exponent $1$. Apply Theorem~\ref{thm:S} with $h=4$ (in Lean
+only the general statement \path{no_perfect_quaternary_sequence} is
+verified, not the eleven instances). The
+second sentence rests on Arasu's remark that these eleven orders are the
+only ones $\le1000$ not excluded before, and on the existence of the
+matrices of orders $1,2,4,8,16$.
+\end{proof}
+
+\subsection{Equality in the descent bound}\label{ssec:Feq}
+For larger orders we combine Theorem~\ref{thm:S} with the classical
+criteria and the following refinement of the equality case of Schmidt's
+field-descent bound.
+
+\begin{lemma}\label{lem:Feq}
+Let $F\ge2$, $C>0$, and $Y=\sum_{i=0}^{F-1}d_i\zeta_F^i$ with integers
+$0\le d_i\le C$ and $Y\conj Y=n\in\Z$. Then
+$n\le C^2F^2/(4\varphi(F))$, and the inequality is strict if $F$ has an
+odd prime divisor.
+\end{lemma}
+
+\begin{proof}
+Let $D(x)=\sum_id_ix^i$ and $D'(x)=D(x)-\frac C2\sum_ix^i$. For $t$ prime
+to $F$, $D'(\zeta_F^t)=D(\zeta_F^t)$ has absolute value $\sqrt n$, because
+$n$ is rational and complex conjugation commutes with
+$\Gal(\Q(\zeta_F)/\Q)$. Hence
+\[
+ \varphi(F)\,n\le\sum_{t\in\Z/F}|D'(\zeta_F^t)|^2
+ =F\sum_i\Bigl(d_i-\frac C2\Bigr)^2\le F^2\frac{C^2}{4}.
+\]
+Equality forces (a) $d_i\in\{0,C\}$ for all $i$, so $D=C\,E$ with
+$E=\sum_{i\in S}x^i$ for some $S\subseteq\Z/F$, and (b)
+$D'(\zeta_F^t)=0$ for every $t$ not prime to $F$. Let $r$ be an odd prime
+divisor of $F$. By (b), $E-\frac12J$ vanishes at every character of $C_F$
+whose order divides $F/r$, i.e.\ at every character of $C_F/C_r$; by
+Fourier inversion the image of $E$ in $\Q[C_F/C_r]$ equals $\frac
+r2J_{C_F/C_r}$. But this image has integer coefficients and
+$r/2\notin\Z$.
+\end{proof}
+
+The inequality is the argument behind Schmidt's bound
+\cite{Schmidt1999,LeungSchmidt2005}; we have not checked whether the
+equality analysis appears in \cite{Schmidt2002LNM} or later work. It
+applies to circulant $\BH(N,4)$, $4\mid N$, as follows. Let $a$ be a perfect quaternary sequence of length $N$, $\chi$ a
+character of $C_N$ of order $N$, and $X=\chi(X_a)=\sum_{t\in\Z/N}c_t
+\zeta_N^t$, where $c_t$ counts the $g$ with $a_g\chi(g)=\zeta_N^t$; then
+$0\le c_t\le C:=4$. By field descent \cite{Schmidt1999,LeungSchmidt2005}
+(see \cite[Result~2.8]{DoDuc2019}) there is $j$ with
+$X\zeta_N^j\in\Z[\zeta_F]$, where $F=F(N,N)$ divides $N$ and is divisible
+by every prime divisor of $N$. Since $1,\zeta_N,\dots,\zeta_N^{N/F-1}$
+is a basis of $\Q(\zeta_N)/\Q(\zeta_F)$, $X\zeta_N^j=\sum_{i<F}d_i
+\zeta_F^i$ with $d_i=c_{iN/F-j}$. Lemma~\ref{lem:Feq} gives Schmidt's
+bound $N\le 4F^2/\varphi(F)$ and excludes equality when $F$ has an odd
+prime divisor.\footnote{Here $F(m,n)$ is the descent exponent of
+\cite[Def.~2.6]{LeungSchmidt2005}, equivalently
+\cite[Def.~2.10]{LeungSchmidt2012}: for $m=\prod_ip_i^{c_i}$ and a prime
+$q\mid n$ let $m_q=\prod_{p_i\ne q}p_i$ if $m$ is odd or $q=2$, and
+$m_q=4\prod_{p_i\ne2,q}p_i$ otherwise; then $F(m,n)=\prod_ip_i^{b_i}$
+with each $b_i\ge1$ minimal such that for every prime $q\mid n$ one of
+the following holds: $q=p_i$ and $(p_i,b_i)\ne(2,1)$; $b_i=c_i$; or
+$q\ne p_i$ and $q^{\ord_{m_q}(q)}\not\equiv1\pmod{p_i^{b_i+1}}$. The
+original \cite[Def.~3.1]{Schmidt1999} takes $m_q=4\prod_{p_i\ne2,q}p_i$
+for every even $m$, including $q=2$, where $\ord_{m_q}(q)$ is not
+defined; we use the form of \cite{LeungSchmidt2005,LeungSchmidt2012}.}
+
+For $N=1800=2^3\cdot3^2\cdot5^2$: $m_2=15$, $m_3=20$, $m_5=12$,
+$\ord_{15}(2)=\ord_{20}(3)=4$, $\ord_{12}(5)=2$, so $b_2=3$, $b_3=b_5=1$,
+$F=120$ and $4F^2/\varphi(F)=1800$: equality, with $3,5\mid F$. In this
+way Lemma~\ref{lem:Feq} excludes, among the lengths $N\equiv0\pmod4$,
+$1000<N\le10^6$, that pass all other criteria of
+Corollary~\ref{cor:quaternary}, exactly the seven lengths $1800$, $3600$,
+$6084$, $12100$, $12168$, $14112$, $24200$ (Table~\ref{tab:Feq})
+\deptag{Comp}; Theorem~\ref{thm:S} does not apply to them.
+
+\subsection{Further special cases}\label{ssec:known}
+Of the eleven pairs $(n,p)$, $n\le100$, left undecided in Yayla's table
+\cite{Yayla2016} of perfect $p$-ary sequences, Theorem~\ref{thm:S}
+excludes $(39,13)$, $(55,11)$, $(63,3)$, $(84,3)$ (primes $3,5,7,7$) and
+$(33,11)$, $(69,23)$, $(95,19)$, already excluded by
+\cite[Thm.~6.5]{LeungSchmidtZhang2023}; $(28,7)$ and $(92,23)$ were
+excluded in \cite{FengXiang2008}, and $(56,7)$, $(99,11)$ are excluded by
+Theorem~\ref{thm:C}. The pair $(63,3)$ does not occur in Do Duc's list
+\cite[Remark~3.13]{DoDuc2019}, although none of the results from which
+that list is derived (\cite[Results~1.1--1.4, Thms.~3.2, 3.3, 3.7,
+3.11]{DoDuc2019}) excludes it as stated \deptag{Comp}; the same holds for
+$(42,3)$, $(78,3)$ (lengths $3pq$ with $p$ or $q\le3$) and $(14,33)$,
+$(20,51)$, $(26,69)$ (pairs $(3+q,3q)$), which suggests that
+\cite[Results~1.1(2),(3)]{DoDuc2019} were applied without the restriction
+$p,q>3$. The pair $(63,3)$ is listed as undecided in Yayla's table
+\cite{Yayla2016}; we do not know whether it was excluded earlier. Our
+counts refer to the published list and are not affected. The following are special cases of
+Theorem~\ref{thm:S}. (1) Lv \cite[Thm.~1.3]{Lv2017}: no perfect $p$-ary
+sequence of length $p^aqn'$ for $p\equiv5\pmod8$, $p>p_0$, primes $q$
+with $\ord_p(q)=(p-1)/4$, and $n'=1$ or $\bigl(\frac{p'}{p}\bigr)=-1$
+for all primes $p'\mid n'$; here $q$ is a quadratic residue modulo $p$,
+so $q\,\|\,p^aqn'$ (prime $q$). (2) Ma and Ng \cite{MaNg2009}, as
+summarized in its abstract: no perfect $p$-ary sequence of length $pq$,
+$q>p$ (prime $q$), or $2p^s$ (prime $2$). (3) Arasu, de Launey and Ma,
+as stated in \cite[Thm.~4.7]{Arasu2011}: a circulant complex Hadamard
+matrix of order $2tp$, $p\equiv1\pmod4$, $t$ odd, $(t,p)=1$, forces
+$t\ge p/(\alpha+1)$ for a certain $\alpha$; Theorem~\ref{thm:S} (prime
+$p$) shows that it does not exist.

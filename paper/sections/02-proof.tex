@@ -1,0 +1,171 @@
+% ===========================================================================
+\section{Proof of Theorem~\ref{thm:S}}\label{sec:S}
+% ===========================================================================
+
+\subsection{Notation}\label{ssec:notation}
+For a finite abelian group $V$ and a subring $R\subseteq\C$ closed under
+complex conjugation, $R[V]$ is the group ring; for
+$f=\sum_{z\in V}f_zz$ put $f^*=\sum_z\conj{f_z}\,z^{-1}$ and
+$\chi(f)=\sum_zf_z\chi(z)$ for $\chi\in\widehat V$, so that
+$\chi(f^*)=\conj{\chi(f)}$. If $V=S\times P$ and $\psi\in\widehat S$, the
+\emph{partial evaluation} $f\mapsto\psi(f)\in R[\psi(S)][P]$ applies
+$\psi$ to the $S$-coordinate; it is a ring homomorphism commuting with
+${}^*$. The \emph{augmentation} of $F=\sum_zF_zz$ is $F(1)=\sum_zF_z$.
+For $f:G\to\mu_h$ and $X_f=\sum_gf(g)g$, the coefficient of $s$ in
+$X_fX_f^*$ is $\sum_gf(g+s)\conj{f(g)}$; so $f$ is perfect iff
+$X_fX_f^*=|G|$, iff $|\chi(X_f)|^2=|G|$ for all $\chi$ ($f$ is a
+generalized bent function), iff $(f(g'-g))_{g,g'}$ is a $\BH(G,h)$. Thus
+Theorem~\ref{thm:S} says: \emph{there is no $X\in\Z[\zeta_h][G]$ with all
+coefficients in $\mu_h$ and $XX^*=|G|$.}
+
+\subsection{Setup}\label{ssec:S-setup}
+Since $p\,\|\,|G|$, the Sylow $p$-subgroup is cyclic of order $p$ and is
+a direct factor: $G=H\times C_p$ with $p\nmid|H|$ and $C_p=\langle
+T\rangle$. Write
+\begin{equation}\label{eq:columns}
+ X=\sum_{k\in\Z/p}c_k\,T^k,\qquad c_k\in\Z[\zeta_h][H],
+\end{equation}
+so that each \emph{column} $c_k$ has $|H|$ coefficients, all in $\mu_h$.
+Let $h'=h$ if $p\nmid h$, and $h'=h/2$ if $p=2$ and $h\equiv2\pmod4$.
+Then $p\nmid h'$ and $\mu_h\subseteq\pm\mu_{h'}\subset\Z[\zeta_{h'}]$
+(if $h'$ is odd, $-\zeta_{h'}^k$ runs through $\mu_{2h'}\setminus\mu_{h'}$).
+Let $L=\operatorname{lcm}(h',\exp H)$ and $\cO=\Z[\zeta_L]$. Since
+$p\nmid L$, the prime $p$ is unramified in $\cO$; fix a prime $\fp$ of
+$\cO$ above $p$. For $\chi\in\widehat H$ the partial evaluation
+\[
+ X_\chi=\sum_{k\in\Z/p}\chi(c_k)\,T^k\in\cO[C_p]
+\]
+satisfies $X_\chi X_\chi^*=|G|$.
+
+\subsection{The column lemma}
+
+\begin{lemma}[Column lemma]\label{lem:column}
+Let $\cO$ be the ring of integers of a number field that is closed under
+complex conjugation and in which $p$ is unramified, let $\fp$ be a prime
+of $\cO$ above $p$, and let $F\in\cO[C_p]$ satisfy $FF^*=n$ with
+$n\in\Z$, $v_p(n)=1$. Then exactly one of $F(1)$, $\conj{F(1)}$ lies in
+$\fp$, and there is $\fq\in\{\fp,\conj\fp\}$ such that every coefficient
+of $F$ lies in $\fq$. In particular $c\,\conj c\in\fp$ for every
+coefficient $c$ of $F$.
+\end{lemma}
+
+The prime $\fq$ may depend on $F$; the assertion $c\conj c\in\fp$ does
+not, because $c\in\conj\fp$ iff $\conj c\in\fp$ ($\cO$ is closed under
+conjugation).
+
+\begin{proof}
+Put $z=F(1)$; applying the augmentation to $FF^*=n$ gives $z\conj z=n\in
+\fp$. Since $\fp$ is prime, $z\in\fp$ or $\conj z\in\fp$. Both cannot
+hold: then $n=z\conj z\in\fp^2$, but $v_\fp(n)=v_p(n)=1$ because $p$ is
+unramified in $\cO$. (This does not use $\fp\ne\conj\fp$; if
+$\fp=\conj\fp$, it shows that no such $F$ exists. This is Turyn's
+self-conjugate case.)
+
+Since $\fp$ lies above $p$, the field $\F=\cO/\fp$ has characteristic
+$p$, so $T^p-1=(T-1)^p$ in $\F[T]$ and
+$(\cO/\fp)[C_p]\cong\F[T]/(T-1)^p$ is a local ring whose maximal ideal is
+the augmentation ideal $(T-1)$; an element is a unit if and only if its
+augmentation is nonzero in $\F$. Reduce $FF^*=n\equiv0$ modulo $\fp$. If
+$z\notin\fp$, the reduction of $F$ is a unit, so $F^*\equiv0\pmod\fp$,
+i.e.\ $\conj c\in\fp$ for every coefficient $c$ of $F$, i.e.\
+$c\in\conj\fp$. If $z\in\fp$, then $\conj z\notin\fp$, the reduction of
+$F^*$ is a unit, and $F\equiv0\pmod\fp$.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:S}}
+Assume $X$ exists, with the notation of Section~\ref{ssec:S-setup}. For
+every $\chi\in\widehat H$, Lemma~\ref{lem:column} applies to $F=X_\chi$
+and $n=|G|$. The coefficients of $X_\chi$ are the values $\chi(c_k)$, so
+\begin{equation}\label{eq:allchi}
+ \chi(c_k)\,\conj{\chi(c_k)}\in\fp\qquad\text{for all }\chi\in\widehat H
+ \text{ and all }k\in\Z/p .
+\end{equation}
+Now \emph{fix one} $k\in\Z/p$. Parseval's identity on $H$ gives
+\[
+ \sum_{\chi\in\widehat H}|\chi(c_k)|^2=|H|\sum_{x\in H}|c_k(x)|^2=|H|^2,
+\]
+since every coefficient $c_k(x)$ is a root of unity. By
+\eqref{eq:allchi} the left side lies in $\fp$. Hence $|H|^2\in\fp\cap\Z
+=p\Z$, contradicting $p\nmid|H|$. \qed
+
+\begin{example}\label{ex:C14}
+Let $G=C_{14}$, $h=7$ and $p=2$. Then $H=C_7$, $L=7$, and $2$ splits in
+$\Z[\zeta_7]$ into $\fp\ne\conj\fp$ (the order of $2$ modulo $7$ is $3$,
+and $-1\notin\langle2\rangle\le(\Z/7)^\times$), so Turyn's
+self-conjugacy argument does not apply. For a perfect $\mu_7$-sequence of
+length $14$ we would have $X_\chi=a_\chi+b_\chi T\in\Z[\zeta_7][C_2]$
+with $|a_\chi|^2+|b_\chi|^2=14$ and $a_\chi\conj{b_\chi}+\conj{a_\chi}b_\chi=0$.
+The column lemma says that $a_\chi,b_\chi$ lie both in $\fp$ or both in
+$\conj\fp$; the Parseval step for the column $c_0$, with $7$ entries in
+$\mu_7$, gives $\sum_\chi|a_\chi|^2=49\in\fp\cap\Z=2\Z$, a contradiction.
+(This length is covered by the results of Ma and Ng on lengths $2p^s$
+\cite{MaNg2009}, as summarized in its abstract.)
+\end{example}
+
+\subsection{Remarks on the proof}
+
+\begin{remark}[Parseval on a single coset]\label{rem:single}
+Summing \eqref{eq:allchi} over $k$ gives $p|H|^2\in\fp$, no
+contradiction; Parseval on $G$ only returns $|G|^2$. The character values
+of $X$ are the $X_\chi(\theta)$, $\theta\in\mu_p$, and from them alone one
+gets congruences between augmentations, as in
+\cite[Lemma~3.11]{LeungSchmidtZhang2023}. The roots of unity enter only
+through $\sum_x|c_k(x)|^2=|H|$, and the hypothesis on $h$ only through
+$v_\fp(|G|)=1$: if $p$ ramifies in $\Q(\zeta_h)$, then $v_\fp(|G|)\ge2$
+and the first step of Lemma~\ref{lem:column} fails. Section~\ref{sec:ramified}
+treats a family in this regime.
+\end{remark}
+
+\begin{remark}[Sharpness]\label{rem:S-sharp}
+Neither hypothesis of Theorem~\ref{thm:S} can be dropped in general.
+\begin{enumerate}[label=(\alph*),leftmargin=*]
+\item \emph{$p$ ramified in $\Q(\zeta_h)$.} Perfect sequences of length
+$p$ over $\mu_p$ exist for odd $p$ \cite{FrankZadoff1962,Chu1972};
+$(1,i)$ is a perfect sequence of length $2$ over $\mu_4$; with first
+entry $1$ there are $12$ perfect $\mu_{12}$-sequences of length $6$ and
+$432$ perfect $\mu_6$-sequences of length $12$ \deptag{Comp}.
+\item \emph{$\nu_p(|G|)=2$.} There are $288$ perfect functions
+$C_2^2\times C_3\to\mu_3$ with value $1$ at $0$ \deptag{Comp}
+($\nu_2=2$, $2\nmid3$); Menon--Hadamard difference sets in
+$C_2^2\times C_3^2$ give perfect binary arrays with $\nu_3=2$
+\cite{Menon1962,DavisJedwab1996}; and Do Duc
+\cite[Thm.~4.3]{DoDuc2019b} constructs $\BH(R\times R,h)$ for finite
+local rings $R$ with residue field of order $p^d$ whenever
+$p^d\in p_1\N+\dots+p_r\N$, where $p_1,\dots,p_r$ are the prime divisors
+of $h$; for $R=\F_5$ and $h=6$ this gives a $\BH(C_5\times C_5,6)$ with
+$5\nmid6$. In all these examples the Sylow subgroup for the prime in
+question is \emph{not cyclic}. Whether the conclusion persists for
+$\nu_p(|G|)=2$ when the Sylow $p$-subgroup is $C_{p^2}$ is open.
+\end{enumerate}
+As a check (not used in the proof), exhaustive searches find no perfect
+function in the non-cyclic cases $C_2\times C_6$ ($h=4,8$),
+$C_3\times C_6$ ($h=3,6$; for $h=6$, $p=2$ and $h\equiv2\pmod4$),
+$C_2\times C_{10}$ ($h=4,6$), $C_2^3\times C_3$ ($h=4$), in the cases
+$p=2$, $h$ odd, $C_6$ ($h=3$) and $C_{10}$ ($h=5$), and in $C_{14}$
+($h=14$), $C_{15}$ ($h=5$), $C_{18}$ ($h=6$), while reproducing the
+positive counts above \deptag{Comp}.
+\end{remark}
+
+\begin{remark}[The case $H=1$]\label{rem:H1}
+For $G=C_p$ the proof reduces to: $X$ or $X^*$ vanishes modulo $\fp$, so
+a root of unity lies in $\fp$. This case is
+\cite[Thm.~3.5]{DucSchmidt2019} for $a=1$, proved there with the
+description of cyclotomic integers of norm $p^b$. It is also implied by
+the theorem of Leung, Chue and Zhao \cite{LeungChueZhao2025} that a
+cyclic Butson matrix of prime order is equivalent to a Fourier matrix
+(Section~\ref{sec:prior}).
+\end{remark}
+
+\subsection{Formal statement}\label{ssec:formal}
+Theorem~\ref{thm:S} is formalized in Lean~4 with Mathlib
+(Section~\ref{sec:lean}). The general statement reads, verbatim (namespace
+\path{OAI.CirculantHadamard.TheoremS}):
+\begin{Verbatim}[fontsize=\footnotesize]
+theorem no_perfect_function_sharp (G : Type*) [AddCommGroup G] [Fintype G] (h p : ℕ)
+    (hp : p.Prime) (hpG : p ∣ Fintype.card G) (hp2 : ¬ p ^ 2 ∣ Fintype.card G)
+    (hunr : ¬ p ∣ h ∨ (p = 2 ∧ ¬ 4 ∣ h)) (a : G → ℂ) (ha : ∀ g, a g ^ h = 1)
+    (hperf : ∀ s ≠ 0, ∑ g, a (g + s) * conj (a g) = 0) : False
+\end{Verbatim}
+\noindent The value $h=0$ is excluded by \texttt{hunr}. Special cases are
+stated separately (Table~\ref{tab:lean}). The formal proof follows the
+proof above; in particular it does not use $\fp\ne\conj\fp$.

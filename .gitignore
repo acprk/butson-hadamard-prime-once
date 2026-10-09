@@ -1,0 +1,15 @@
+/.lake/
+/lakefile.olean
+/lakefile.olean.trace
+/lakefile.ilean
+paper/build/
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+__pycache__/
+*.pyc
+.DS_Store

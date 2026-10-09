@@ -1,0 +1,134 @@
+% ===========================================================================
+\section{Formal verification and computations}\label{sec:verif}
+% ===========================================================================
+
+\subsection{Lean formalization}\label{sec:lean}
+The formalization uses Lean~4 (toolchain \texttt{v4.34.1}) and Mathlib
+(revision \texttt{d13f23b}). It is placed in the Lean library that
+accompanies \cite{OpenAI2026}, but the modules for Theorem~\ref{thm:S}
+and Corollary~\ref{cor:R} depend only on Mathlib. For every theorem in
+Table~\ref{tab:lean}, \texttt{\#print axioms} reports exactly
+\texttt{[propext, Classical.choice, Quot.sound]}, and the source files
+contain no \texttt{sorry}, \texttt{admit}, \texttt{native\_decide} or new
+\texttt{axiom}. The modules \path{TheoremS/} (\path{Cyclotomic},
+\path{Core}, \path{LocalRing}, \path{Product}, \path{Decomposition},
+\path{Main}, \path{Sharp}; $784$ lines) follow the proof of
+Section~\ref{sec:S}. Corollary~\ref{cor:R} ($126$ lines) describes $D$ by
+a homomorphism $\pi:G\to Q$ with kernel $N$ and a section $\sigma$ such
+that every $g\notin N$ is a difference $\sigma(q_1)-\sigma(q_2)$ exactly
+$\lambda$ times, and expresses ``$N$ is not a $p$-group'' by a nonzero
+$x\in\ker\pi$ with $p\nmid\ord x$; it is in
+\path{OAI/LinearAlgebra/CirculantHadamard/TheoremS/RDS.lean}.
+
+The modules \path{RamifiedComparison/} (\path{Core}, \path{Localized},
+\path{PrimeCyclotomic}, \path{LemmaA}, \path{Auxiliary},
+\path{TheoremC}, \path{PrimePower}; $2338$ lines; namespace
+\path{OAI.CirculantHadamard.RamifiedComparison}) formalize
+Section~\ref{sec:ramified}. The main statements are:
+\begin{Verbatim}[fontsize=\footnotesize]
+theorem lemmaA (p d : ℕ) [hp : Fact p.Prime] (hd : ¬ p ∣ d)
+    [IsCyclotomicExtension {p * d} ℚ K] {ζ : K} (hζ : IsPrimitiveRoot ζ p)
+    (P : Ideal (𝓞 K)) [hP : P.IsPrime] [hPo : P.LiesOver (Ideal.span {(p : ℤ)})]
+    (u v : ZMod p → 𝓞 K) (n : ℤ) (hn₁ : (p : ℤ) ∣ n) (hn₂ : ¬ (p : ℤ) ^ 2 ∣ n)
+    (huv : ∀ τ : ZMod p, ∑ a, u a * v (τ - a) = if τ = 0 then (n : 𝓞 K) else 0) :
+    ∃ α : ℕ, ∀ j : ℕ,
+      ∑ a, u a * hζ.toInteger ^ (j * a.val) ∈ P ^ α ∧
+      ∑ a, u a * hζ.toInteger ^ (j * a.val) ∉ P ^ (α + 1) ∧
+      (∑ a, u a * hζ.toInteger ^ (j * a.val)) - ∑ a, u a ∈ P ^ (α + 1)
+
+theorem not_exists_perfect_prime_power_phase (p q : ℕ) [hp : Fact p.Prime]
+    [hq : Fact q.Prime] (hpq : p ≠ q) (e : ℕ) (he : 1 ≤ e) :
+    ¬ ∃ a : ZMod (p * q ^ e) → ℂ,
+      (∀ j, a j ^ p = 1) ∧
+      ∀ τ : ZMod (p * q ^ e), τ ≠ 0 →
+        ∑ j, a j * (starRingEnd ℂ) (a (j + τ)) = 0
+\end{Verbatim}
+\noindent \path{lemmaA} is Lemma~\ref{lem:A} for $n\in\Z$ with
+$v_p(n)=1$ (not for general $n\in\cO$ with $v_\fP(n)=p-1$), for an
+arbitrary second factor $V$ and an arbitrary prime $\fP$ above $p$.
+\path{not_exists_perfect_prime_power_phase} is Theorem~\ref{thm:C}(i)
+for all primes $p\ne q$, including $p=2$ and $q=2$. Theorem~\ref{thm:B}
+is formalized only inside this proof, for $x=X_a$ with coefficients
+$a(g)=\zeta_p^{k(g)}$ (hypothesis \texttt{hu}) and $n=pq^e$. At the
+primes above $q$ the formal proof uses the comparison lemma of the Lean
+library of \cite{OpenAI2026} (\path{actual_local_character_association});
+Lemma~\ref{lem:comparison} as stated, with the descent for $f\ge2$, is
+not formalized.
+
+\begin{table}[ht]
+\centering
+\caption{Lean theorems (namespace \texttt{OAI.CirculantHadamard.TheoremS},
+resp.\ \texttt{OAI.CirculantHadamard.RamifiedComparison} for the last two
+rows of the first part) and the statements they formalize.}
+\label{tab:lean}
+\footnotesize
+\begin{tabular}{@{}ll@{}}
+\toprule
+\multicolumn{2}{@{}l}{\emph{Formally verified statements}}\\
+\texttt{no\_perfect\_function\_sharp} & Theorem~\ref{thm:S}\\
+\texttt{no\_perfect\_sequence\_sharp} & Theorem~\ref{thm:S} for $G=\Z/n$\\
+\texttt{no\_perfect\_function}, \texttt{no\_perfect\_sequence} & Theorem~\ref{thm:S} for $p\nmid h$; Corollary~\ref{cor:doduc}(i), and (ii) for odd $h$\\
+\texttt{no\_perfect\_sequence\_two\_mod\_four} & Corollary~\ref{cor:doduc}(ii) for $G=\Z/n$ and $h\equiv2\pmod4$\\
+\texttt{no\_perfect\_quaternary\_sequence} & the case $h=4$, $p$ odd\\
+\texttt{RDSCheck.no\_semiregular\_rds} & Corollary~\ref{cor:R}\\
+\texttt{lemmaA} & Lemma~\ref{lem:A} for $n\in\Z$\\
+\texttt{not\_exists\_perfect\_prime\_power\_phase} & Theorem~\ref{thm:C}(i); Theorem~\ref{thm:B} for $x=X_a$, $n=pq^e$\\
+\midrule
+\multicolumn{2}{@{}l}{\emph{Derived from the above by arguments that are not formalized}}\\
+Corollary~\ref{cor:squarefree} & uses the constructions of Mow and Duc--Schmidt\\
+Corollary~\ref{cor:ksw} & translation to generalized bent functions\\
+Corollary~\ref{cor:arasu} & eleven instances of \texttt{no\_perfect\_quaternary\_sequence};\\
+ & the second sentence relies on Arasu's remark\\
+\midrule
+\multicolumn{2}{@{}l}{\emph{Not formalized:} counts for Do Duc's list, Lemma~\ref{lem:Feq} and its
+applications, Corollary~\ref{cor:quaternary},}\\
+\multicolumn{2}{@{}l}{Lemma~\ref{lem:comparison}, Theorem~\ref{thm:B} for general admissible $n$,
+Theorem~\ref{thm:C}(ii), Corollaries~\ref{cor:C-new}, \ref{cor:C-rds},}\\
+\multicolumn{2}{@{}l}{the counts of Section~\ref{sec:ramified}}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Computations}\label{ssec:comp}
+No proof depends on a computation. The pairs of Do Duc's list were
+transcribed from the list referenced in \cite[Remark~3.13]{DoDuc2019};
+the counts $2262$, $61$, $364$ were obtained by two independent scripts,
+and the comparison with earlier criteria by a third. The searches of
+Remark~\ref{rem:S-sharp} and Example~\ref{ex:R} enumerate all
+$f:G\to\mu_h$ with $f(0)=1$ (up to $8.6\cdot10^9$ functions), checking
+all autocorrelations in floating point, or use a meet-in-the-middle
+search for $G=K\times C_2$ based on $|\chi(c_0)|^2+|\chi(c_1)|^2=|G|$
+and $\operatorname{Re}(\chi(c_0)\conj{\chi(c_1)})=0$; the two methods
+agree on overlapping cases. Corollary~\ref{cor:quaternary} was computed
+by a criterion engine and reproduced by an independent implementation;
+the descent exponents of \cite[Def.~2.6]{LeungSchmidt2005} and
+\cite[Def.~2.10]{LeungSchmidt2012} agree on all $33{,}223$ pairs $(L,N)$
+used, and both reproduce $F(165^2,165)=3\cdot5^2\cdot11^2$
+\cite[Example~2.7]{LeungSchmidt2005}.
+
+For Section~\ref{sec:ramified}: complete enumerations for Lemma~\ref{lem:A}
+(Remark~\ref{rem:A}(e)); for Theorem~\ref{thm:B}, all $1944$, $504$ and
+$52{,}488$ elements for $(p,q,e,n)=(3,2,2,12)$, $(3,7,1,21)$,
+$(3,2,2,300)$, and the negative controls of Remark~\ref{rem:B}(b); the
+chain of the proof on the $400$ perfect $\mu_{10}$-sequences of length
+$20$ (Example~\ref{ex:fail}, Remark~\ref{rem:C}(b)); the search for
+perfect $\mu_7$-arrays on $C_7\times C_8$ and $C_7\times C_2^3$
+(Remark~\ref{rem:C}(a)); the valuation statistics of
+Remark~\ref{rem:C}(c); and the classification of the lengths
+$pq^e\le2000$ against the earlier criteria of Section~\ref{ssec:knownC},
+together with the check of $(63,3)$ against the criteria of
+\cite{DoDuc2019} (Section~\ref{ssec:known}), by a stdlib-only Python
+script. These enumerations were written independently of the programs
+that first produced the corresponding claims.
+
+\subsection{Artifact and data availability}\label{ssec:artifact}
+The Lean development is on the branch
+\path{contrib/general-norm-extensions} of our fork of the Lean library of
+\cite{OpenAI2026}, based on upstream commit \texttt{fd4aeeb2ee4f}; the
+\path{TheoremS} modules will be committed there at release (the
+\path{RamifiedComparison} modules are contained in commit
+\texttt{08fcd618213a}), and the
+commit hash, \texttt{lake-manifest.json}, build log and
+\texttt{\#print axioms} output will be published with the artifact,
+together with the computation scripts and logs and the transcription of
+Do Duc's list with its SHA-256 checksum.

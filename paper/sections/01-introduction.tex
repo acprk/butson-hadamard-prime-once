@@ -1,0 +1,111 @@
+% ===========================================================================
+\section{Introduction}\label{sec:intro}
+% ===========================================================================
+
+A \emph{Butson Hadamard matrix} $\BH(n,h)$ \cite{Butson1962} is an
+$n\times n$ matrix $H$ with entries in the group $\mu_h$ of complex
+$h$-th roots of unity and $HH^*=nI_n$. For a finite abelian group $G$, a
+\emph{$G$-invariant} $\BH(G,h)$ has entries $f(g'-g)$ for a function
+$f:G\to\mu_h$. For $G=C_n$ these are the circulant $\BH(n,h)$, whose
+first rows are the \emph{perfect sequences} of length $n$ over $\mu_h$;
+equivalent objects are generalized bent functions $G\to\Z_h$ and, for
+prime $h$, semi-regular relative difference sets. Since Turyn
+\cite{Turyn1965}, nonexistence proofs work with the ideal factorization
+of the character values of $X=\sum_gf(g)g\in\Z[\zeta_h][G]$, which have
+absolute value $\sqrt{|G|}$: self-conjugacy, Ma's lemma
+\cite{Ma1985,Pott1995}, field descent \cite{Schmidt1999}, class groups.
+
+\subsection{Two conjectures}\label{ssec:conj}
+Let $r$ be the square-free part of $n$. The following conjecture is
+attributed to Mow \cite{Mow1995} in K.-U.~Schmidt's survey
+\cite[Conj.~4.1.1]{Schmidt2016survey} (we could not consult the text of
+\cite{Mow1995}, whose abstract describes a unified construction):
+\emph{a perfect sequence of length $n>1$ over $\mu_H$ exists if and only
+if $H$ is divisible by $2\sqrt{rn}$ for $n\equiv2\pmod4$ and by
+$\sqrt{rn}$ otherwise.} Do Duc \cite[Conj.~3.1]{DoDuc2019}\footnote{We
+number the results of \cite{DoDuc2019} as in arXiv:1903.07334v2.}
+conjectured:
+\emph{a $\BH(\Z_n,h)$ exists if and only if (i)
+$\nu_p(h)\ge\lceil\nu_p(n)/2\rceil$ for every prime $p\mid n$, and (ii)
+$\nu_2(h)\ge2$ if $n\equiv2\pmod4$.} Since
+$\nu_p(\sqrt{rn})=\lceil\nu_p(n)/2\rceil$, the two conjectures are the
+same statement. Sufficiency follows from the constructions of Mow and of
+Duc and Schmidt \cite[Cor.~2.5]{DucSchmidt2019}, \cite[Result~4.1]{DoDuc2019}. Do Duc writes that ``we are
+far from proving Conjecture~3.1'' and lists $2687$ pairs $(n,h)$,
+$n,h\le100$, as open \cite[Remark~3.13]{DoDuc2019}.
+
+\subsection{The main theorem}
+
+\begin{theorem}\label{thm:S}
+Let $G$ be a finite abelian group and $p$ a prime with $p\,\|\,|G|$. If
+$p$ is unramified in $\Q(\zeta_h)$, that is, $p\nmid h$, or $p=2$ and
+$4\nmid h$, then there is no $\BH(G,h)$. In particular, if a perfect
+sequence of length $n$ over $\mu_h$ exists, then every prime $p$ with
+$\nu_p(n)=1$ divides $h$, and $4\mid h$ if $n\equiv2\pmod4$.
+\deptag{Lean}
+\end{theorem}
+
+The proof (Section~\ref{sec:S}) writes $G=H\times C_p$, evaluates only
+the characters of $H$, and keeps $C_p$ as a group-ring variable. Modulo a
+prime above $p$ the group ring of $C_p$ becomes the local ring
+$\F[T]/(T-1)^p$; this forces all coefficients of the partial evaluation
+into one prime above $p$, and Parseval's identity on a single coset of
+$C_p$ gives a contradiction.
+
+\subsection{Consequences}
+(a) Conditions (i) at every prime $p$ with $\nu_p(n)=1$ and (ii) are
+necessary for every abelian group of order $n$ (Corollary~\ref{cor:doduc}).
+With the known sufficiency this gives:
+
+\begin{corollary}\label{cor:squarefree}
+Let $n$ and $h$ be positive integers. If $n$ is square-free, a
+$\BH(\Z_n,h)$ exists if and only if $n\mid h$
+and, for even $n$, $4\mid h$. Thus the conjectures of Mow and of Do Duc
+hold for square-free $n$; e.g.\ a circulant $\BH(2p,h)$, $p$ an odd
+prime, exists if and only if $4p\mid h$. \deptag{Lean-derived}
+\end{corollary}
+
+\noindent Theorem~\ref{thm:S} excludes $2323$ of the $2687$ pairs listed
+in \cite[Remark~3.13]{DoDuc2019}; $2063$ of them are not excluded by any
+result known to us, subject to \cite{LeungChueZhao2025}. (b) For $q\equiv2\pmod4$ there is no generalized bent
+function $\Z_q\to\Z_q$, the case $m=1$ of the problem of Kumar, Scholtz
+and Welch \cite{KumarScholtzWelch1985}, treated so far family by family,
+most recently for $q=2\cdot3^a7^b$ \cite{YingDeng2026}
+(Corollary~\ref{cor:ksw}). (c) If $D$ is a semi-regular RDS in an
+abelian group $G$ relative to $N$ and $p\,\|\,|G/N|$, then $N$ is a
+$p$-group, without any splitting assumption (Corollary~\ref{cor:R}).
+This contains all nonexistence results of
+\cite[Sect.~6]{LeungSchmidtZhang2023} and decides eight entries marked
+``?'' in its tables. (d) The eleven orders $260$, $340$, $442$, $468$,
+$520$, $580$, $680$, $754$, $820$, $884$, $890$, the only orders $\le1000$
+for which a circulant complex Hadamard matrix had not been excluded
+according to Arasu's survey \cite{Arasu2011}, are excluded
+(Corollary~\ref{cor:arasu}). (e) For perfect quaternary sequences of
+length $N\equiv0\pmod4$, $N\le5000$, only $3528$ and $4900$ remain
+under the criteria we implemented (Appendix~\ref{app:quaternary}).
+
+(f) \emph{The ramified regime} (Section~\ref{sec:ramified}). For the
+family $\BH(pq^e,p)$, $p\ne q$ primes, Theorem~\ref{thm:S} applies only
+if $e=1$ or $p=2$. Theorem~\ref{thm:C} shows that there is no circulant
+$\BH(pq^e,p)$ for all $e\ge1$. Earlier results cover the case that $q$ is
+self-conjugate modulo $p$ \cite[Thm.~3.3]{DoDuc2019} and further
+subfamilies; of the $334$ lengths $pq^e\le2000$ with $p$ odd and $e\ge2$,
+$34$ are not covered by the earlier criteria we implemented, among them
+$56$ and $99$ from Yayla's table \cite{Yayla2016}. The tool is a
+comparison lemma at the ramified prime $p$ (Lemma~\ref{lem:A}), proved by
+expanding in the uniformizer $\zeta_p-1$: the digits are polynomials in
+the exponent of bounded degree, and comparing degrees with the $p$ points
+of $\F_p$ gives the claim.
+
+The proofs use no result of the (not peer-reviewed) OpenAI preprint on
+the circulant Hadamard conjecture \cite{OpenAI2026}, in whose Lean
+library our formalization is placed.
+
+\paragraph{Conventions}
+$C_N$ is the cyclic group of order $N$, $\zeta_t=e^{2\pi i/t}$,
+$\nu_p=v_p$ the $p$-adic valuation and $v_\fP$ the valuation at a prime
+ideal $\fP$. Tags: \deptag{Lean}: the statement is an instance of a
+formally verified Lean theorem (Section~\ref{sec:lean});
+\deptag{Lean-derived}: it follows from a formally verified statement by a
+short argument that is not formalized; \deptag{Comp}: it rests on a
+finite computation (Section~\ref{ssec:comp}).

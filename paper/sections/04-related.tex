@@ -1,0 +1,66 @@
+% ===========================================================================
+\section{Related work and status of the literature check}\label{sec:prior}
+% ===========================================================================
+
+\paragraph{The nearest predecessor}
+Leung, Schmidt and Zhang \cite[Lemma~3.11]{LeungSchmidtZhang2023} prove:
+if $X=\sum_{i=0}^{p-1}x_i\zeta_p^i$ and $Y=\sum_ix_i$ with
+$x_i\in\Z[\zeta_m]$, $p\nmid m$, $p\nmid Y$ and $|X|^2=|Y|^2=pw$,
+$p\nmid w$, then $p\mid X\conj Y$. In our notation $Y$ is the
+augmentation of $X_\chi$ and $X$ another of its character values, so the
+lemma is a statement at the level of character values. The proof of
+Theorem~\ref{thm:S} needs two further steps: the conclusion is pushed
+from the augmentation to all \emph{coefficients} of $X_\chi$
+(Lemma~\ref{lem:column}), and Parseval's identity is applied to a
+\emph{single} coset of $C_p$. The column step is a local form of Ma's
+lemma \cite{Ma1985}, \cite[Lemma~1.5.1]{Pott1995},
+\cite[Result~2.4]{DoDuc2019}; there the input is divisibility of the
+character values of all of $G$ by a power of $p$, here it is the norm
+equation for the partial evaluation in $\cO[C_p]$.
+
+\paragraph{Other work}
+Besides the works cited in Section~\ref{sec:cons}: Brock
+\cite{Brock1988} constrains general $\BH(n,h)$; for perfect $p$-ary
+sequences and RDS see also Feng \cite{Feng2009}, Liu and Feng
+\cite{LiuFeng2015}, and Zhang and Ge \cite{ZhangGe2018} (RDS with
+$\gcd(m,n)=1$). Leung and Wang \cite{LeungWang2020} and Leung, Li and Mao
+\cite{LeungLiMao2023} prove nonexistence of generalized bent functions
+$\Z_2^n\to\Z_m$ by vanishing sums; there $\nu_2(|G|)=n$, so
+Theorem~\ref{thm:S} applies only for $n=1$. Ong and Schmidt
+\cite{OngSchmidt2026} construct $\BH(\F_q\times\F_q,\operatorname{lcm}
+(6,d))$ from Gauss sums; the Sylow subgroups are not cyclic there,
+consistent with Remark~\ref{rem:S-sharp}.
+
+\paragraph{Leung--Chue--Zhao}
+Leung, Chue and Zhao \cite{LeungChueZhao2025} apply vanishing sums to
+cyclic Butson matrices. According to its abstract and to
+\cite[Sect.~1]{OngSchmidt2026}, they prove that every $\BH(\Z_p,h)$, $p$
+prime, is monomially equivalent to a Fourier matrix (this covers the case
+$H=1$ of Theorem~\ref{thm:S}, cf.\ Remark~\ref{rem:H1}); their abstract
+also states that they classify the cyclic Butson matrices of order $6$
+and give a necessary condition for cyclic Butson matrices of order $2p$.
+These results may contain the cases $n=6$ and $n=2p$ of
+Corollary~\ref{cor:squarefree}, and the $474$ pairs with $n=2p$
+($17$ with $n=6$) among the $2063$ pairs of Do Duc's list in
+Section~\ref{sec:cons} may be excluded there.\footnote{Pending: we have
+not been able to consult the full text of \cite{LeungChueZhao2025}; the
+comparison with it is based on its abstract only and will be completed
+before publication.}
+
+\paragraph{Status of the literature check}
+We have consulted the full texts (in the versions available to us) of
+\cite{DoDuc2019,DoDuc2019b,DucSchmidt2019,LeungSchmidtZhang2023,Lv2017,
+Feng2009,Yayla2016,WinterhofYaylaZiegler2014,Arasu2011,
+HiranandaniSchlenker2016,LeungSchmidt2005,LeungSchmidt2012,
+LeungSchmidt2019,Arxiv260724103,OngSchmidt2026,MaSchmidt1995} and of the arXiv version
+of \cite{Schmidt2016survey}, and found no statement of
+Theorem~\ref{thm:S}, of its cyclic case, of
+Corollary~\ref{cor:squarefree}, or of Theorem~\ref{thm:C} beyond the
+cases discussed in Section~\ref{ssec:knownC}. We have \emph{not} been able to consult
+the full texts of
+\cite{ArasuDeLauneyMa2002,Ma1996,MaNg2009,LeungChueZhao2025,Pott1995,
+Schmidt2002LNM,DeLauneyFlannery2011,Mow1995} or of
+\cite{Pei1993,Ikeda1999,Feng2001,LiuMaFeng2002,FengLiu2003b}; every
+statement we make about these works is taken from the source indicated
+at the place where it is used, and the comparison with them is
+provisional.

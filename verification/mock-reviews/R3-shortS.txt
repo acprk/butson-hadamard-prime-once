@@ -1,0 +1,304 @@
+第三轮审稿意见（JCTA/SIDMA 反方审稿人，复审修改稿）
+论文：Group-Invariant Butson Hadamard Matrices and a Prime Dividing the Order Exactly Once
+（preprintBH/main.pdf，12 页，2026-10-09 03:30 编译；源文件 preprintBH/sections/）
+对照：R1-JCTA.txt、R2-SIDMA.txt、MERGED-FIXES.md
+日期：2026-10-09
+
+======================================================================
+0. 总体判断
+======================================================================
+修改稿现在是一篇只讲一个定理的短文：Theorem S/S′、Corollary R 及其推论，外加 Lean
+形式化。数学部分没有问题。我把主证明（column lemma 加单陪集 Parseval）重新读了一遍，
+没有发现漏洞。新增的 Corollary 1.2 在逻辑上成立：必要性来自 S′，充分性来自 Do Duc
+Result 4.1。小参数穷举在两个方向上都与它完全一致（见 §2）。Corollary R 声称包含
+LSZ23 §6 的全部不存在性结论，经核对属实（见 §4）。
+
+仍然阻碍投稿的有两类问题。
+(A) 新颖性的查证依旧停在摘要层面。更具体地说，项目内部笔记
+release/lit/THEOREM-S-PRIOR.txt 第 94–96 行记载，LCZ25 摘要中提到 order 6 循环
+Butson 矩阵的完全分类，以及 order 2p 的必要条件。可是论文 §4 对 LCZ25 的描述只提了
+后者，漏掉了 "order 6 全分类"。另一方面，§3 把 (6,16) 和 (6,30) 当作 "we know of no
+earlier exclusion" 的例子。如果 LCZ25 的分类确实覆盖 n=6，这两个例子就错了；"2063
+个新排除" 中 n=6 的 17 对（2262 类 13 对，61 类 4 对）也不能再算新的。n=2p 的剩余
+对共 463+11 对，同样悬而未决。
+(B) 稿件里仍有 "(to be checked)"、作者和致谢占位、内部路径等残留，不能送审。
+
+建议：minor revision，前提是 (A) 可以通过阅读 LCZ25 全文解决。如果 LCZ25 已经包含
+n=2p 情形的 "p | h 且 4 | h"，Corollary 1.2 的举例和新计数都要改，届时应按 major
+处理。数学本身不需要再修改。
+
+======================================================================
+1. MERGED-FIXES.md 逐项核对
+======================================================================
+1. 读全文查证先行文献（严重）—— 未解决（no）
+   §4 "Status of the literature check" 现在如实列出哪些读过、哪些没读，比上一稿诚实。
+   但清单里最关键的几项仍然没读：ADM02、Ma96、MaNg09、LCZ25、Pott LNM 1601、
+   Schmidt LNM 1797、de Launey–Flannery、Mow95。
+   §4 的小节标题仍是 "Leung–Chue–Zhao (to be checked)"，正文仍写 "this is to be
+   checked against the full text"，这些都出现在 PDF 正文里。
+   对 LCZ25 的转述只有 "order 2p 必要条件" 和 "素数阶为 Fourier"。项目自己的查新笔记还
+   记有 "order 6 全分类"，论文没有提，这是选择性转述（见 §3 第 3 点）。
+   向 Schmidt、Leung 或 Do Duc 本人询问一事也没有做。
+   这一项需要用户本人出面：机构访问权限和对外联系。
+
+2. 引用 Mow 1995 猜想 —— 已解决（yes）
+   引文核对：K.-U. Schmidt, "Sequences with small correlation"，arXiv:1602.03722 第 22
+   页，Conjecture 4.1.1 与论文转述逐字一致，包括 n>1、square-free part r、对
+   n≡2 (mod 4) 要求 2√(rn)、其余情形要求 √(rn)。
+   同页写明 "Mow [79] has proved the 'if' direction"，Theorem 4.1.7 也给出了构造。
+   论文说 Mow 猜想和 Do Duc 猜想是 "同一陈述"，我核对过，正确：
+   ν_p(√(rn)) = ⌈ν_p(n)/2⌉；n≡2 (mod 4) 时 ν_2(2√(rn)) = 2，正好对应 (ii)。
+   注意：refs.bib 里 Schmidt2016survey 的作者是 Kai-Uwe Schmidt，而 release/lit 里的
+   schmidt_bh_survey2019.pdf 是 Bernhard Schmidt 的另一篇综述，里面没有 Mow。论文
+   引用的是前者，这没有错。但在 artifact 中应附上正确的 PDF（arxiv_1602.03722），免得
+   读者混淆。
+
+3. 改成 8–12 页短文（严重）—— 基本解决（yes/partly）
+   Part III、Lemma A、Theorem B、Theorem C 和 [179-Prop] 都已移除（grep 不到 "179" 或
+   "Theorem C"）。页数是 12 页。
+   R1 要求 "在引言中给出 S′ 的完整证明"。现在完整证明在 §2（第 3–4 页），引言里只有
+   三行思路。对短文来说可以接受，记为 partly。
+   CompanionC（"[Authors withheld]"，未发表的伴随稿）仍被引用两次：§1 末尾，以及
+   §3.6 中 "(56,7)、(99,11) are treated in CompanionC"。这两处只是转介，不影响正文的
+   正确性。
+
+4. 计数口径（严重）—— 部分解决（partly）
+   措辞已改为 "excludes 2323 of the 2687 pairs"。2262 类也做了 "此前已排除" 的扣除，
+   并写上了 "under the criteria we implemented"。
+   我重跑了 count2262/deduct.py：2262/61/2687/364 都能复现，扣除结果是 237 和 23，
+   剩余 2025+38=2063，与正文一致。
+   问题出在扣除所依据的先行准则不完整，详见 §3。最严重的是没有纳入 LCZ25：n=6 的
+   全分类（按项目笔记），以及 order 2p 的条件。所以 "2063 new" 这个数和 (6,16)、
+   (6,30) 这两个例子都没有可靠的依据。
+
+5. 收窄 Lean 标签（严重）—— 基本解决（yes），有一处不一致
+   Table 1 已经分成 "Formally verified / Derived / Not formalized" 三栏。
+   Cor ksw 和 Cor arasu 改标 [Lean-derived]，并注明 Lean 里只有一般陈述。
+   Arasu 那句 "only 1,2,4,8,16" 已注明依赖 Arasu 的 remark。Lemma 6.2 已随 Part III
+   一起删除。
+   axioms/ax_all.out 和 ax_rds.out 我都看过，7 个定理全部只依赖
+   [propext, Classical.choice, Quot.sound]。TheoremS 除去 RDS.lean 共 784 行，与正文
+   一致。
+   残留的不一致有三处：
+   (a) §5.1 写 "It will be merged into the library as TheoremS/RDS.lean at release; at
+       the time of writing it is the verification file verifyNonsplit/RDSCorollary.lean"。
+       实际情况是 openai-math/lean/OAI/LinearAlgebra/CirculantHadamard/TheoremS/RDS.lean
+       已经存在（未提交），而且它的文件头仍写着 "(verification copy, not part of the
+       library)"，命名空间是 ...TheoremS.RDSCheck。PDF 里出现内部路径
+       "verifyNonsplit/" 也不合适。这一点在 R1/R2 里就要求统一，至今仍未统一。
+   (b) §5.1 说 "the modules for Theorem S and Corollary R import only Mathlib"。实际上
+       RDS.lean、Main.lean、Sharp.lean 都 import 了 TheoremS 内部模块，只是传递依赖
+       最终只到 Mathlib。应改为 "depend only on Mathlib"。
+   (c) Table 1 中 "no_perfect_sequence_two_mod_four ↦ Cor doduc(ii) for G=Z/n" 这一行：
+       该定理的假设是 h%4=2，只覆盖 h≡2 (mod 4)。h 为奇数的情形由
+       no_perfect_sequence（p=2）覆盖，一般群 G 的 (ii) 则由 no_perfect_function_sharp
+       覆盖。表述应写准确。Cor doduc 的 [Lean] 标签本身没有问题（经由 _sharp）。
+
+6. 清除 TODO、占位符、内部路径，加 AI 使用声明 —— 部分解决（partly）
+   AI-use statement 已经加上（07-statements.tex），但源文件注释仍写着 "DRAFT to be
+   confirmed"。PDF 中仍有以下残留：
+   - "[AUTHOR INFORMATION WITHHELD]"（每页页眉，共 6 处）；
+   - "[Acknowledgments to be supplied by the authors.]"；
+   - §4 小节标题 "Leung–Chue–Zhao (to be checked)" 和正文 "this is to be checked
+     against the full text"；
+   - 内部路径 verifyNonsplit/RDSCorollary.lean；
+   - 参考文献 CompanionC 的作者为 "[Authors withheld]"。
+   源文件中还有 main.tex 的 "% DRAFT -- do not distribute" 注释，以及 refs.bib 头部
+   提到 "TODO verify" 的说明（我没有找到实际带该标记的条目）。这些注释不进 PDF，可以
+   保留，但发布源文件前应删掉。
+   双盲投稿时，作者占位符是允许的。但 "(to be checked)" 绝不能出现在送审版里。
+
+7. Corollary R 包含 LSZ23 §6 全部不存在性结论 —— 已解决（yes），核对见 §4。
+
+8. F 值脚注与七个长度 —— 已解决（yes）
+   脚注改用了 LS05 Def 2.6 和 LS12 Def 2.10，并说明 Schmidt99 Def 3.1 在 q=2 时没有
+   定义。Table 2 列出了全部 7 个长度。我逐个核对了 4F²/φ(F)：1800、3600、6084、12100、
+   12168、14112、24200，全部正确。
+   附带问题：脚注最后一句 "For the parameters of [LS12, Example 3.2] … gives the factor
+   863²; note that 863 is a base-13 Wieferich prime" 是对的。我用
+   fcheck/fdesc.py 的 F_A 和 F_B 独立计算，得到 F(2·11²·13²·863², 13²·23²·863²) =
+   2·11·13²·863²；并验证了 13^862 ≡ 1 (mod 863²)。可是 LS12 原文写的是 F = 2·11·13²·863。
+   按 863² 重算，Example 3.2 的右端要乘约 863，不等式不再矛盾，也就是说 LS12 声称
+   排除的 u=2838407 不再被排除。这是在指出已发表文献的一个实质性错误，现在却以
+   "note that…" 的暗示口吻放在脚注里。要么正面写出结论（建议先联系 Leung/Schmidt），
+   要么整句删除。它与本文主线无关。现在的写法 "中立" 过了头，读者看不懂它在说什么。
+
+9. 公开 artifact —— 未解决（no，只给了承诺）
+   §5.3 写的是 "will be committed there at release"。目前 TheoremS/ 在 fork 中处于
+   untracked 状态（git status 显示 ?? TheoremS/），没有 commit hash。
+   计数脚本 deduct.py 依赖 /tmp/hs.txt（Hiranandani–Schlenker PDF 的 pdftotext 输出，
+   按行号 312:327 硬切）。这个输入在别的机器上无法复现，必须把转写的表格作为数据文件
+   一起放进 artifact。
+
+10. Remark 4.5 精确化并加非循环搜索 —— 已解决（yes）
+    我复现了两个正计数：C_6, h=12，首项为 1 时 12 个；C_2²×C_3, h=3 时 288 个。
+    文中列出的非循环搜索也已补上。
+    小意见：列表中的 C_3×C_6 (h=6)、C_6 (h=3)、C_10 (h=5)、C_14 (h=14) 等其实都落在
+    S′ 的假设之内，是 "sanity check" 而不是 "sharpness" 的证据。文中写的是 "As a
+    check"，措辞可以接受。
+
+11. LS2012 Ex 3.2 脚注措辞中立化 —— 形式上已做，实质见第 8 项（partly）。
+
+Minor 项：摘要已压缩；Cor 5.8 已移到附录 A；编号引用正常。main.log 里只有 hyperref 的
+Unicode 警告，没有 undefined reference。—— yes
+
+======================================================================
+2. 新 Corollary 1.2 的核验
+======================================================================
+论文陈述：n 为 square-free 时，BH(Z_n,h) 存在 ⇔ n | h 且（n 为偶数 ⇒ 4 | h）。
+
+(1) Do Duc Result 4.1 原文（1903.07334v2 第 21 页）：
+    "Let n and h be positive integers. Then a BH(Z_n, h) matrix exists whenever n and h
+     satisfy the following condition: n | (h, n)² and (ν_2(n), ν_2(h)) ≠ (1, 1)."
+    其中注明这是 "a direct corollary of Result 1.5"，即 Duc–Schmidt [10]
+    Cor 2.5；同文 Introduction 第 2 页也直接写了 (i)(ii) ⇒ 存在。
+    n 为 square-free 且 n | h 时，(h,n)=n，n | n² 成立。
+    - n 为奇数：ν_2(n)=0，第二个条件自动成立。
+    - n 为偶数：ν_2(n)=1，需要 ν_2(h)≠1；又因 2 | n | h，所以等价于 4 | h。
+    因此 Result 4.1 对所有 square-free 的 n 都给出充分性。
+    反过来，square-free 的 n 满足 n | (h,n)² 当且仅当 n | h，所以必要性方向的条件与
+    S′ 给出的条件恰好重合：p | h 对所有 p | n；n≡2 (mod 4)，也就是 n 为偶数时 4 | h。
+    逻辑闭合。
+
+(2) 边界情形
+    - n=1：任何 h ≥ 1 都存在（1×1 矩阵），与 "1 | h" 一致。
+      注意 Mow 猜想原文要求 n>1，Corollary 1.2 包含 n=1 不会引起矛盾。
+    - n=2：充要条件是 4 | h。h=2 时不存在，h=4 时存在（(1,i)），与 DS19 Thm 3.6 一致。
+    - h=n 与 h=2n：n 为奇数时 h=n 已经足够。n 为偶数（n≡2 mod 4）时，h=n 不够
+      （ν_2=1），h=2n 足够（ν_2=2，且 n | 2n）。这与 "a circulant BH(2p,h) 存在 ⇔
+      4p | h" 一致（lcm(2p,4)=4p）。
+    - 唯一的隐含前提是 h ≥ 1，建议在陈述中写明 "positive integers"。
+
+(3) 穷举验证（我自己写的程序，/tmp/bhchk/bf.py，固定 a_0=1）
+    n ∈ {1,2,3,5,6,7}：对 μ_h^{n-1} 全枚举，检查所有 |DFT|² = n。
+    n = 10：用 C_5×C_2 中途相遇（按 |χ(c_0)|²+|χ(c_1)|²=10 建哈希，再检查
+    Re(χ(c_0)·conj χ(c_1))=0），并在 n=6 上与全枚举交叉验证，结果一致。
+    h = 1..12，共 84 个 (n,h) 格子，与 Corollary 1.2 的断言全部一致（0 个不符）。
+    存在的格子恰好是：
+      n=1 时所有 h；n=2: h=4,8,12；n=3: h=3,6,9,12；n=5: h=5,10；n=6: h=12；
+      n=7: h=7；n=10: h≤12 时一个也没有。
+    补充检查：n=10, h=20 存在，n=10, h ∈ {4,10} 不存在；n=6, h ∈ {4,6} 不存在。
+    两个方向都与断言相符。
+
+(4) "Mow 和 Do Duc 的猜想对 square-free 的 n 成立" 这一说法：准确。
+    Mow 猜想（K.-U. Schmidt 综述 Conj 4.1.1）在 n square-free 时 r=n、√(rn)=n。
+    n≡2 (mod 4) 时 2n | H ⇔ n | H 且 4 | H，与 Corollary 1.2 完全相同。
+    "if" 方向是 Mow 证明的，综述 Theorem 4.1.7 也给出了构造。
+    要提醒的是，"首次证明" 的先行性取决于 LCZ25（n=2p、n=6）和 MaNg09（2p^s，只针对
+    p-ary），这一点尚未落实。素数幂情形早已由 DS19 Thm 3.6 完全解决。建议在
+    Corollary 1.2 后写明：n 为素数（幂）的情形是 DS19 Thm 3.6；n=2p 的情形需与 LCZ25
+    对照。
+    充分性方向建议同时直接引用原始出处 DucSchmidt2019 Cor 2.5（以及
+    Schmidt2016survey Thm 4.1.7），不要只引用二手的 Result 4.1。
+
+======================================================================
+3. 计数扣除脚本（count2262/deduct.py）审查
+======================================================================
+我重跑了脚本，所有断言通过：|P|=2687，2262 和 61 两个类成立；扣除结果 237 和 23，
+剩余 2025 和 38。正文的 2063 = 2025 + 38 无误。
+
+逻辑逐条检查如下。
+- Turyn 主特征判据（turyn0）：要求 ν_p(n) 为奇数、p 在 Q(ζ_h) 中不分歧、p 关于 h 的
+  p-free 部分 self-conjugate，则 |χ_0(X)|²=n 无解。这个判据正确。对 p'-阶的非主特征，
+  self-conjugacy 的模数只会变大，条件只会更难满足，所以只检查主特征不会漏掉什么，
+  处理恰当。
+  n=h=2N 时，p=2 的情况自动退化为 KSW Prop 6，也已被覆盖。
+- h=4 一律记为 Arasu 已排除。这对 n ≤ 100 是成立的：Arasu 的 remark 覆盖到 1000，
+  所列 11 个开放阶都 ≥ 260。
+- h 为奇素数时，凡不在 Yayla 未决表中的对一律记为 Yayla Table 2 已排除。这默认
+  Yayla 的表覆盖了所有 n ≤ 100 和所有素数 h ≤ 100。只影响 8 对，但应在脚本注释里写出
+  依据。分支 'h prime, h∤n' 和 'h=2' 实际命中 0 对，属于死代码。
+- HS 表解析读取的是 /tmp/hs.txt，按行号硬切，靠列位置就近匹配列号，在别的机器上不可
+  复现，容易错位。只影响 9 对，但必须改为随 artifact 发布的数据文件。
+- gbf 部分只对 n=h 生效，而 2262 类中 n≠h 恒成立，所以只影响 61 类。没有纳入
+  Leung–Schmidt 2019（N=p^a），但我检查过：61 类中不存在 n=h=2p^a 的对，所以
+  不影响数字。(78,78)（N=3·13）是否被 Feng01、LiuMaFeng02、FengLiu03 覆盖，未读原文，
+  无法判定。
+- 我额外用 Schmidt 的 field-descent 界做了补充检查：对 d | n 取 m=lcm(h,d)、
+  C=nh/m，同时用 F_A 和 F_B 两种定义。剩下的 2025+38 对中命中 0 对，所以这一类旧准则
+  不会再减少 "新" 的数量。这是对作者有利的结果，可以写进正文。
+- 关键遗漏在 LCZ25。剩余对中有 n=2p 的 463（2262 类）+11（61 类）对，其中 n=6 的有
+  13+4=17 对，正文的例子 (6,16) 和 (6,30) 都在里面。项目自己的查新笔记
+  （THEOREM-S-PRIOR.txt 第 94–96 行）记载 LCZ25 摘要提到 "order 6 全分类"。如果属实，
+  这 17 对就是先行结果，(6,16) 和 (6,30) 必须从 "no earlier exclusion" 的例子中撤下；
+  n=2p 的 474 对也都可能受影响。
+  结论：脚本没有算术错误。但 "2063 new" 应当再保守一些。在读到 LCZ25 全文之前，建议
+  写成 "for at most 2063 … we know of no earlier exclusion; this count does not take
+  into account [LCZ25], whose full text we could not consult"。
+  正文的五个例子 (6,16)、(10,36)、(39,13)、(6,30)、(14,42) 中，有四个的 n 形如 2p
+  （6、10、14），只有 (39,13) 不是。应改用 n 不是 2p 形式的例子，例如 n=15、21、30、39
+  的剩余对。
+
+======================================================================
+4. Corollary R ⊇ LSZ23 §6 的核对（LSZ2023_RDS_060822_final.pdf 第 18–22 页）
+======================================================================
+LSZ23 中 (pn, n, pn, p) RDS 的 |G/N| = pn，|N| = n。当 p∤n 且 n ≥ 2 时 p ∥ |G/N|，
+而 N 不是 p-群，所以由 Corollary R 可知不存在。逐条核对如下。
+- Thm 6.1：(pq^r, q^r, pq^r, p)，p 和 q 是不同的素数，n=q^r ≥ 2 与 p 互素。Corollary R
+  无需条件 (a)–(c) 即可推出。✓
+- Thm 6.2：其假设 n>1 且与 p 互素，本身就已经推出不存在，结论中的 p 的上界因此变得
+  多余。✓
+- Cor 6.3（对固定的 n，只有有限个 p）：由 Corollary R 立即得到，因为能出现的 p 只能是
+  n 的素因子。论文说的 "stronger form" ✓
+- Cor 6.4：在 gcd(p,n)=1、n ≥ 2 的范围内 ✓。论文脚注指出字面上允许 n=1，我核对过：
+  (p,1,p,p) RDS 取 D=G=C_p 时确实存在，所以字面陈述在 n=1 时为假，原证明经由
+  Thm 6.2 要求 n>1。脚注措辞准确且中立。✓
+- Thm 6.5：(pq, q, pq, p)，n=q ✓，也不需要 "p,q 为奇数" 和 gcd(p,q−1)=1 这两个条件。✓
+另外两点：
+- 论文说 Corollary R 是 Thm 5.1(a) 在 b=1 时去掉 self-conjugacy 条件的情形，核对正确：
+  q | n，p ≠ q，p ∥ mn。
+- 表中 "?" 条目已全部核对。Table 1 的 ? 是 n=24、96、98；Table 2 是 12、13、39、48；
+  Table 3 是 12、20、48、49、80、98。论文判定的 8 个和 "其余 5 个没有恰好整除一次的素数"
+  都正确。
+结论：这一主张准确。
+
+======================================================================
+5. 夸大、Lean 标签、残留问题
+======================================================================
+- 摘要和引言中 "the conjectures of Mow and of Do Duc hold for square-free lengths"：
+  数学上成立，但先行性要等 LCZ25 核对后才能确定（见 §2(4)）。
+- 引言 (a) "Conditions (i) … and (ii) are necessary for every abelian group of order n"：
+  成立（Corollary doduc 加上 _sharp）。
+- §3 "Before, the necessity of (ii) was known for n=2 [DS19, Thm 3.6] …"：
+  DS19 Thm 3.6 是素数幂阶的完全刻画，附录 (C2) 也引用它，两处引用不矛盾。✓
+  但应补上 LCZ25，至少注明 "possibly order 2p"。
+- Corollary 1.2 在 PDF 中没有 deptag；Table 1 中已归入 Derived，可以接受。建议在陈述
+  旁边加 [Lean-derived]，与其他推论保持一致。
+- Example 2.4（C_14, h=7）声称 2 在 Z[ζ_7] 中分裂且 −1 ∉ ⟨2⟩：ord_7(2)=3，⟨2⟩={1,2,4}，
+  正确。
+- Lean 的形式陈述与正文一致，h=0 被 hunr 排除，说法正确。
+- 内部路径、占位符、"(to be checked)" 见 §1 第 6 项。
+
+======================================================================
+6. 结论与剩余修改清单（按优先级排列）
+======================================================================
+建议：minor revision，条件是第 1 项能落实；如果 LCZ25 覆盖了 n=2p，则改为 major。
+
+1. 【必须】取得并阅读 LCZ25 全文。
+   (a) 核对它对 order 6 的分类和 order 2p 的必要条件，是否已经蕴含 Corollary 1.2 在
+       n=6 和 n=2p 时的情形。
+   (b) 据此改写 §4 的 LCZ25 段，删去 "(to be checked)"，并补上 "order 6 classification"
+       的转述。
+   (c) 重算 "2063 new"，至少扣除 n=6 的 17 对，必要时扣除 n=2p 的全部 474 对；同时把
+       正文例子 (6,16)、(6,30)、(10,36)、(14,42) 换成 n 不是 2p 的对，例如 (39,13)，或
+       n=15、21、30 这类。
+   如果全文暂时拿不到，就明确写 "count does not account for [LCZ25]"。
+2. 【必须】清除 PDF 中所有 "(to be checked)" 和 "to be checked against the full text"。
+   作者和致谢占位符在定稿前替换；CompanionC 的作者占位也要处理。
+3. 【必须】统一 Corollary R 的 Lean 文件位置：TheoremS/RDS.lean 已经存在。删掉
+   verifyNonsplit 路径，修改 RDS.lean 头部的 "verification copy, not part of the
+   library"，命名空间 RDSCheck 是否保留也要与 Table 1 一致。"import only Mathlib" 改为
+   "depend only on Mathlib"。
+4. 【应改】脚注里关于 LS12 Example 3.2 的 863² 一句：这是在指出已发表结果的实质错误
+   （按 Def 2.10 计算，Example 3.2 的矛盾不再成立）。要么正面陈述并联系原作者，要么删除。
+5. 【应改】Artifact：提交 TheoremS 并给出 commit hash；把 HS Table 1 的转写数据作为
+   文件附上，替换 /tmp/hs.txt 和硬编码的行号；在脚本注释中写明 Yayla 表的覆盖范围。
+6. 【应改】Corollary 1.2：写明 h 为正整数；充分性同时引用 DucSchmidt2019 Cor 2.5 和
+   Schmidt2016survey Thm 4.1.7；注明素数幂情形是 DS19 Thm 3.6；陈述旁加
+   [Lean-derived] 标签。
+7. 【小】Table 1 中 two_mod_four 一行写准确：只覆盖 h≡2 (mod 4)，奇数 h 由
+   no_perfect_sequence 覆盖。
+8. 【小】可以在 §3 增加一句：剩余 2063 对已用 Schmidt field-descent 界（F_A 和 F_B）
+   复查，命中 0 对。这会增强 "new" 计数的可信度。
+9. 【用户】先行文献全文（ADM02、Ma96、MaNg09、Pott、Schmidt LNM、de Launey–Flannery、
+   Mow95）以及向 Schmidt、Leung 或 Do Duc 询问，仍是投稿前的硬性前提（MERGED 第 1 项）。

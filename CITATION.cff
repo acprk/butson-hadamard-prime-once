@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+message: >-
+  If you use this paper or its Lean formalization, please cite it as below.
+  Cite OpenAI's circulant Hadamard formalization separately when using the
+  upstream files listed in UPSTREAM.md.
+type: software
+title: 'Group-invariant Butson Hadamard matrices: a prime dividing the order exactly once'
+version: 0.1.0
+date-released: '2026-10-09'
+authors:
+  - name: '[AUTHOR NAME]'
+license: Apache-2.0
+abstract: >-
+  A paper and Lean 4 formalization showing that if a prime p divides the
+  order of a finite abelian group G exactly once and is unramified in
+  Q(zeta_h), there is no G-invariant Butson Hadamard matrix BH(G,h)
+  (equivalently no generalized bent function G -> Z_h, and no perfect
+  sequence of length |G| over the h-th roots of unity for cyclic G). It
+  includes a corollary on semi-regular relative difference sets, Do Duc's
+  condition (ii), and, for the ramified family BH(pq^e,p), a comparison lemma
+  at the ramified prime (Lemma A) and nonexistence for all primes p != q and
+  e >= 1 (Theorem C). The results were found, verified and formalized by
+  Claude (Anthropic) agents under the repository owner's direction. Lean
+  checks the stated theorems with axioms propext, Classical.choice and
+  Quot.sound only. No human peer review has taken place, and the prior-art
+  check against several paywalled references is pending; no
+  historical-priority claim is made.
+keywords:
+  - Butson Hadamard matrix
+  - perfect sequence
+  - generalized bent function
+  - relative difference set
+  - cyclotomic integers
+  - Lean
+  - formal verification
+references:
+  - type: software
+    title: 'The circulant Hadamard conjecture (Lean formalization)'
+    authors:
+      - name: OpenAI
+    repository-code: 'https://github.com/openai/math'
+    commit: fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb
+    url: 'https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean/OAI/LinearAlgebra/CirculantHadamard'

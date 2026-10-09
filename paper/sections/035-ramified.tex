@@ -1,0 +1,479 @@
+% ===========================================================================
+\section{The ramified regime}\label{sec:ramified}
+% ===========================================================================
+
+Theorem~\ref{thm:S} needs a prime $p$ with $p\,\|\,|G|$ that is
+unramified in $\Q(\zeta_h)$. We treat the simplest family to which it
+does not apply, the perfect $p$-ary sequences of length $pq^e$.
+
+\begin{theorem}\label{thm:C}
+Let $p\ne q$ be primes and $e\ge1$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item There is no perfect sequence of length $pq^e$ over $\mu_p$, i.e.\
+no circulant $\BH(pq^e,p)$. \deptag{Lean}
+\item More generally, let $u\ge1$ with $\gcd(u,pq)=1$ such that every
+prime divisor of $u$ is self-conjugate modulo $pq$
+(Section~\ref{ssec:prelimC}). Then there is no
+perfect sequence of length $pq^eu$ over $\mu_p$.
+\end{enumerate}
+\end{theorem}
+
+\paragraph{What is new}
+For $e=1$, Theorem~\ref{thm:C}(i) follows from Theorem~\ref{thm:S} with
+the prime $q$, and for $p=2$ from Theorem~\ref{thm:S} with the prime $2$.
+If $q$ is self-conjugate modulo $p$, then $q$ is self-conjugate modulo
+$\operatorname{lcm}(pq^e,p)$, and \cite[Thm.~3.3]{DoDuc2019} excludes
+$\BH(pq^e,p)$ for every $e$; e.g.\ $(75,3)$, where $5\equiv-1\pmod3$. So
+the new range of (i) is: $p$ odd, $e\ge2$ and $q$ not self-conjugate
+modulo $p$. There the only prime dividing $pq^e$ exactly once is $p$,
+which ramifies in $\Q(\zeta_p)$, so the methods based on a prime dividing
+the length exactly once do not apply, and the self-conjugacy argument
+at $q$ (\cite[Thm.~3.3]{DoDuc2019}) does not apply. Some of these lengths are covered by other earlier criteria
+(Section~\ref{ssec:knownC}): of the $334$ lengths $pq^e\le2000$ with $p$
+odd and $e\ge2$, $300$ are excluded by them and $34$ are not
+\deptag{Comp}, namely
+$56$, $99$, $112$, $117$, $184$, $224$, $248$, $275$, $297$, $351$,
+$448$, $475$, $496$, $584$, $621$, $736$, $775$, $847$, $891$, $896$,
+$931$, $992$, $1053$, $1269$, $1375$, $1421$, $1472$, $1504$, $1593$,
+$1775$, $1792$, $1813$, $1863$, $1984$.
+In (ii), \cite[Thm.~3.3]{DoDuc2019} applies exactly when $q$ or some
+prime divisor $r$ of $u$ is self-conjugate modulo
+$\operatorname{lcm}(pq^eu,p)=pq^eu$ in the sense of
+\cite[Def.~2.5]{DoDuc2019}, i.e.\ when $q$ is self-conjugate modulo $pu$
+or $r$ is self-conjugate modulo $pq^eu_{r'}$, $u_{r'}$ the largest
+divisor of $u$ prime to $r$; the latter is the case if $q$ is odd and $u$ is a
+prime power, since then $r^j\equiv-1\pmod{pq}$ implies
+$r^{jq^{e-1}}\equiv-1\pmod{pq^e}$. An instance of (ii) not covered by the
+criteria of Section~\ref{ssec:knownC} is $(1400,7)$, $1400=7\cdot2^3\cdot5^2$:
+$5$ is self-conjugate modulo $14$ but not modulo $56$, and $2$ is not
+self-conjugate modulo $175$.
+
+\begin{corollary}\label{cor:C-new}
+There is no perfect $7$-ary sequence of length $56$, $847$ or $1400$,
+and no perfect $11$-ary sequence of length $99$.
+\end{corollary}
+
+The pairs $(56,7)$ and $(99,11)$ are the two pairs of Yayla's table
+\cite{Yayla2016} not covered by Theorem~\ref{thm:S} or earlier work
+(Section~\ref{ssec:known}).
+
+The main new ingredient is a comparison lemma at the ramified prime $p$
+(Lemma~\ref{lem:A}): for $F\in\cO[C_p]$ with $FF^*=n$, $v_p(n)=1$, over
+$\cO=\Z[\zeta_{pd}]$, the valuation of $F(\zeta_p^j)$ at a prime above
+$p$ does not depend on $j$, and $F(\zeta_p^j)\equiv F(1)$ to the next
+order. With it at $p$ and a classical comparison at $q$, an alternating
+product of character values is $1$ (Theorem~\ref{thm:B}); this forces
+proportional projections and a contradiction modulo $1-\zeta_p$.
+
+\subsection{Preliminaries}\label{ssec:prelimC}
+We use the notation of Section~\ref{ssec:notation}. For a quotient map
+$V\to V/U$ we write $\pr_U$ (or $\pr_t$ when the image is cyclic of order
+$t$) for the induced map of group rings.
+
+\begin{proposition}\label{prop:rds-split}
+Let $G=N\times H$ be abelian with $N\cong C_r$, $r$ prime. The
+semi-regular $(|H|,r,|H|,|H|/r)$-RDS in $G$ relative to $N$ are the graphs
+$\{(f(x),x):x\in H\}$ of the maps $f:H\to N$ such that $\psi\circ f$ is
+perfect for one (equivalently every) character $\psi\ne1$ of $N$.
+\end{proposition}
+
+\begin{proof}
+A semi-regular RDS meets each coset of $N$ once, so it is a graph. For a
+character $\psi\otimes\chi$ of $N\times H$ with $\psi\ne1$ the character
+value of the graph is $\chi(X_{\psi\circ f})$, and $|\cdot|^2=|H|$ for all
+such characters is the RDS condition. The maps $\psi\circ f$, $\psi\ne1$,
+are Galois conjugate.
+\end{proof}
+
+\begin{proposition}[{\cite[Thm.~4.1.1]{Pott1995}}]\label{prop:exponent}
+If $R$ is an abelian $(m,n,m,m/n)$-RDS in $G$, then $\exp(G)\mid m$, or
+$G=C_4$ and $n=2$.
+\end{proposition}
+
+A prime $r$ is \emph{self-conjugate modulo $L$} if $r^j\equiv-1\pmod
+{L_{r'}}$ for some $j\ge0$, where $L_{r'}$ is the largest divisor of $L$
+prime to $r$.
+
+\begin{lemma}[{\cite{Turyn1965}}]\label{lem:selfconj}
+If $r$ is self-conjugate modulo $L$, every prime $\fQ$ of $\Z[\zeta_L]$
+above $r$ satisfies $\conj\fQ=\fQ$; hence $\alpha\conj\alpha=n\in\Z_{>0}$
+implies $v_\fQ(\alpha)=\frac12v_\fQ(n)$.
+\end{lemma}
+
+\begin{proof}
+The decomposition group of $r$ in $(\Z/L)^\times$ is generated by the
+inertia group and $r$ \cite[Thm.~2.13]{Washington1997}; it contains $-1$
+iff $-1\in\langle r\rangle$ modulo $L_{r'}$.
+\end{proof}
+
+\begin{lemma}\label{lem:local}
+Let $q$ be a prime, $\eta$ a root of unity of order prime to $q$, and $A$
+the localization of $\Z[\eta]$ at a maximal ideal containing $q$. Then
+$A$ is a discrete valuation ring with maximal ideal $qA$. If $\xi$ is a
+primitive $q^e$-th root of unity and $D=(q-1)q^{e-1}$, then $A[\xi]$ is a
+discrete valuation ring, free over $A$ with basis $1,\xi,\dots,\xi^{D-1}$,
+with maximal ideal $(\xi-1)$, and $\sum_{j<D}a_j\xi^j\in q^sA[\xi]$ iff
+all $a_j\in q^sA$.
+\end{lemma}
+
+\begin{proof}
+$q$ is unramified in $\Z[\eta]$, so $A$ is a DVR with uniformizer $q$.
+$\Phi_{q^e}(1+Y)$ is Eisenstein over $A$, so $A[\xi]\cong
+A[X]/(\Phi_{q^e})$ is free with the stated basis, and
+$A[\xi]/qA[\xi]\cong(A/qA)[Y]/(Y^D)$ is local with principal maximal
+ideal $(Y)$. Since $A[\xi]$ is finite over $A$, every maximal ideal of
+$A[\xi]$ contains $q$; hence $A[\xi]$ is local with maximal ideal
+$(\xi-1)$, which contains $q$, and is a DVR.
+\end{proof}
+
+\begin{lemma}[Unramified comparison]\label{lem:comparison}
+Let $A$ be as in Lemma~\ref{lem:local}, $\rho$ a primitive $q$-th root of
+unity, $e\ge1$, $0\le f\le e$, and $F,K'\in A[C_{q^e}]$ with
+$FK'=q^fb$, $b\in A^\times$. Then $F(\rho)/F(1)$ and $K'(\rho)/K'(1)$
+are units of $A[\rho]$ with residue $1$.
+\end{lemma}
+
+\begin{proof}
+All character values divide $q^fb$ and are nonzero, and
+$K'(\rho)/K'(1)=F(1)/F(\rho)$, so it suffices to treat $F$ or $K'$. If
+$f\le1$, then $v_q(F(1))+v_q(K'(1))=f\le1$, so one of $F(1)$, $K'(1)$ is
+a unit of $A$, say $F(1)$; since $F(\rho)\equiv F(1)\pmod{\rho-1}$ and
+$A[\rho]$ is local with maximal ideal $(\rho-1)$, $F(\rho)$ is a unit and
+$F(\rho)/F(1)\equiv1$. If $f\ge2$, then $e\ge2$. For a primitive
+$q^e$-th root $\xi$, $v(F(\xi))+v(K'(\xi))=fD\ge2D$ in the DVR $A[\xi]$
+(with $v(\xi-1)=1$, $v(q)=D$), so after interchanging $F$ and $K'$ we
+have $F(\xi)\in qA[\xi]$. By Lemma~\ref{lem:local} the remainder of $F$
+modulo $\Phi_{q^e}(T)$ has coefficients in $qA$, i.e.\ $F\equiv
+\Phi_{q^e}(T)S\pmod q$ for some $S$. Let $\pr:A[C_{q^e}]\to
+A[C_{q^{e-1}}]$ be the projection; then $\pr(\Phi_{q^e}(T))=q$, so
+$\pr(F)\in qA[C_{q^{e-1}}]$. The pair $(\pr(F)/q,\pr(K'))$ satisfies
+$(\pr(F)/q)\pr(K')=q^{f-1}b$ with $f-1\le e-1$, and its values at $1$ and
+$\rho$ are those of $(F/q,K')$, since $\rho$ factors through
+$C_{q^{e-1}}$. We conclude by induction on $f$.
+\end{proof}
+
+The case $f\le1$ is the first-order congruence also used in
+\cite[Lemma~3.11]{LeungSchmidtZhang2023}. The descent for $f\ge2$ is
+Ma's lemma \cite{Ma1985}, \cite[Lemma~3.1]{MaSchmidt1995},
+\cite[Result~2.4]{DoDuc2019} for a single character:
+$\Phi_{q^e}(T)=\sum_{i<q}T^{iq^{e-1}}$ is the sum of the elements of the
+subgroup $P$ of order $q$ of $C_{q^e}=\langle T\rangle$, so $F\equiv
+\Phi_{q^e}(T)S\pmod q$ is the conclusion $F=qX+PY$ of that lemma; see
+also \cite[Lemma~3.1]{OpenAI2026}. Lemma~\ref{lem:comparison} is not
+formalized as stated (Section~\ref{sec:lean}).
+
+\begin{lemma}\label{lem:torsion}
+\textup{(i)} An element of $\Z[\zeta_M]$ of absolute value $1$ under
+every embedding is a root of unity \cite{Kronecker1857}.
+\textup{(ii)} In a local domain of residue characteristic $\ell$, a root
+of unity with residue $1$ has $\ell$-power order.
+\end{lemma}
+
+\begin{proof}
+(i) is Kronecker's theorem. (ii) If $\zeta\ne1$ has order $s$ prime to
+$\ell$ and residue $1$, then $0=1+\zeta+\dots+\zeta^{s-1}$ reduces to
+$s\ne0$ in the residue field. In general, if $\zeta$ has order
+$\ell^as$ with $\ell\nmid s$, then $\zeta^{\ell^a}$ has order $s$ and
+residue $1$, so $s=1$ by the case just treated.
+\end{proof}
+
+\subsection{The ramified comparison lemma}\label{ssec:lemmaA}
+In $\BH(pq^e,p)$ with $p$ odd and $e\ge2$, the prime $q$ divides the
+order $e\ge2$ times, so Lemma~\ref{lem:column} is not available at $q$,
+and at $p$ the coefficient ring $\Z[\zeta_p]$ is ramified.
+
+\begin{example}\label{ex:fail}
+Lemma~\ref{lem:comparison} with $f\le1$, and
+\cite[Lemma~3.11]{LeungSchmidtZhang2023}, use that one of $F(1)$,
+$F^*(1)$ is a unit at the prime in question, i.e.\
+$v_\fP(F(1))\in\{0,v_\fP(n)\}$. This fails at a ramified prime, already on
+existing objects. Circulant $\BH(20,10)$ exist ($400$ perfect
+$\mu_{10}$-sequences of length $20$ with first entry $1$). Write such a
+sequence on $C_5\times C_4$ and let $F\in\Z[\zeta_{20}][C_5]$ be its
+partial evaluation at a character of $C_4$; then $FF^*=20$ and
+$v_5(20)=1$, but at both primes $\fP$ of $\Q(\zeta_{20})$ above $5$
+(ramification index $4$) one has $v_\fP(F(1))=2$, for all $400$ sequences
+and all four characters \deptag{Comp}. For general
+$F\in\Z[\zeta_{40}][C_5]$ with $FF^*\in\{5,10\}$ the pairs
+$(v_\fP(F(1)),v_{\conj\fP}(F(1)))$ take the values $(1,3)$, $(2,2)$,
+$(3,1)$. Feng's argument \cite[Lemmas~2, 3]{Feng2009} uses that
+$\F_p[E]$ is semisimple; the analogous ring $\cO/p\cO$ is not reduced when
+$p$ ramifies in $\cO$.
+\end{example}
+
+Let $p$ be a prime, $d\ge1$ with $p\nmid d$, $\cO=\Z[\zeta_{pd}]$,
+$\zeta=\zeta_p$ and $y=\zeta-1$. For $F=\sum_{a\in\Z/p}u_aT^a\in\cO[C_p]$
+and $j\in\Z/p$ write $F(\zeta^j)=\sum_au_a\zeta^{ja}$; the coefficients
+$u_a$ may involve $\zeta_p$.
+
+\begin{lemma}[Lemma~A]\label{lem:A}
+Let $\fP$ be a prime of $\cO$ above $p$ and let $F,V\in\cO[C_p]$ satisfy
+$FV=n$ with $n\in\cO$, $v_\fP(n)=p-1$ (for instance $n\in\Z$ with
+$v_p(n)=1$). Then there is $\alpha\ge0$ such that for \emph{all}
+$j\in\Z/p$, including $j=0$,
+\[
+ v_\fP(F(\zeta^j))=\alpha\qquad\text{and}\qquad
+ F(\zeta^j)\equiv F(1)\pmod{\fP^{\alpha+1}};
+\]
+in particular $F(\zeta^j)/F(1)$ is a $\fP$-unit with residue $1$.
+\deptag{Lean, $n\in\Z$}
+\end{lemma}
+
+No hypothesis $\fP=\conj\fP$ or $\fP\ne\conj\fP$ is needed, and $V$ is
+arbitrary; for $V=F^*$ the hypothesis is $FF^*=n$.
+
+\begin{proof}
+Work in the completion $\cO_\fP=W[\zeta]$, where $W$ is unramified over
+$\Z_p$ with residue field $\resf$; $y$ is a uniformizer, normalized by
+$v(y)=1$, so $v(p)=p-1$. Since $\Phi_p(1+y)\equiv y^{p-1}\pmod p$,
+$\cO_\fP/p\cO_\fP\cong\resf[y]/(y^{p-1})$, and every $u\in\cO_\fP$ has a
+unique expansion $u\equiv\sum_{k=0}^{p-2}\bar u_ky^k\pmod p$ with
+\emph{digits} $\bar u_k\in\resf$.
+
+\emph{Digit polynomials.} For an integer $N$ and $0\le i\le p-2$, the
+binomial coefficient $\binom Ni$ modulo $p$ depends only on $N\bmod p$
+and is a polynomial in $N$ of degree $i$ over $\F_p$. Hence, with
+$u_a\equiv\sum_k\bar u_{a,k}y^k$,
+\[
+ F(\zeta^j)=\sum_au_a(1+y)^{ja}\equiv\sum_{t=0}^{p-2}c_t(j)\,y^t
+ \pmod p,\qquad c_t(j)=\sum_a\sum_{k+i=t}\bar u_{a,k}\binom{ja}{i},
+\]
+where $c_t\in\resf[T]$ has degree $\le t$. In the same way
+$V(\zeta^j)\equiv\sum_td_t(j)y^t$ with $\deg d_t\le t$.
+
+\emph{Valuations.} Put $a(j)=v(F(\zeta^j))$ and $b(j)=v(V(\zeta^j))$.
+Evaluating $FV=n$ at $\zeta^j$ gives $a(j)+b(j)=p-1$ for all $p$ values of
+$j$. Let $\alpha=\min_ja(j)$, $\beta=\min_jb(j)$, so $\alpha+\beta\le
+p-1$.
+
+If $\alpha=0$, some $F(\zeta^{j_0})$ is a unit; since $F(\zeta^j)\equiv
+F(1)\pmod y$, all $F(\zeta^j)$ are units congruent to $F(1)$ modulo $y$,
+which is the claim. If $\beta=0$, the same holds for $V$, so $a(j)=p-1$
+for all $j$ and $F(\zeta^j)/F(1)=V(1)/V(\zeta^j)\equiv1$. So let
+$1\le\alpha,\beta\le p-2$.
+
+Since $a(j)\ge\alpha$ for all $j$, the polynomials $c_t$, $t<\alpha$,
+vanish at all $p$ points of $\F_p$; having degree $<p$, they are zero.
+The polynomial $c_\alpha$ is nonzero (it does not vanish where
+$a(j)=\alpha\le p-2$) and has degree $\le\alpha$, so $a(j)>\alpha$ for at
+most $\alpha$ values of $j$; likewise $b(j)>\beta$ for at most $\beta$
+values. As $\alpha+\beta<p$, some $j_0$ has $a(j_0)=\alpha$ and
+$b(j_0)=\beta$, whence $\alpha+\beta=p-1$; then $a(j)\ge\alpha$,
+$b(j)\ge\beta$ and $a(j)+b(j)=p-1$ force $a\equiv\alpha$, $b\equiv\beta$.
+
+\emph{Leading digits.} As $\alpha,\beta\le p-2$, the residue of
+$F(\zeta^j)/y^\alpha$ is $c_\alpha(j)$ (the error lies in $p\cO_\fP$, of
+valuation $p-1>\alpha$) and that of $V(\zeta^j)/y^\beta$ is $d_\beta(j)$.
+Their product is the residue $\kappa\ne0$ of $n/y^{p-1}$, independent of
+$j$. So $c_\alpha d_\beta-\kappa$, of degree $\le\alpha+\beta=p-1$,
+vanishes at all $p$ points of $\F_p$ and is zero; since $\resf[T]$ is a
+domain, $c_\alpha$ is a constant. Hence $F(\zeta^j)/y^\alpha$ and
+$F(1)/y^\alpha$ have the same nonzero residue, i.e.\
+$F(\zeta^j)\equiv F(1)\pmod{\fP^{\alpha+1}}$.
+\end{proof}
+
+\begin{remark}\label{rem:A}
+(a) \emph{All $p$ points are needed.} The degree bound $p-1$ is beaten
+only because $j$ runs over all of $\F_p$, including $j=0$, and the
+comparison is with $F(1)$.
+(b) \emph{$v_\fP(n)=p-1$ is needed.} $F=p-2J\in\Z[C_p]$ has $FF^*=p^2$
+and $F(\zeta)/F(1)=-1$.
+(c) \emph{Relation to \cite[Lemma~3.11]{LeungSchmidtZhang2023}.} If the
+coefficients of $F$ lie in a ring unramified at $p$, then
+$v_\fP(F(1))\in\{0,p-1\}$ and the congruence $F(\zeta^j)\equiv
+F(1)\pmod y$ suffices; this is the situation of
+\cite[Lemma~3.11]{LeungSchmidtZhang2023}. In Theorem~\ref{thm:C} the
+coefficients after contraction are sums of elements of $\mu_p$, and
+Example~\ref{ex:fail} shows that intermediate valuations occur.
+Re-encoding through the RDS in $\Z[N\times C_p\times C_m]$ to avoid
+$\zeta_p$ does not help: the relevant augmentation is then the value of a
+character trivial on $N$, which is $0$. The two lemmas do not imply each
+other: Lemma~A allows coefficients involving $\zeta_p$ and adds the
+residue statement, but it needs the group-ring identity $FV=n$, i.e.\ the
+norm equation at all $p$ characters of $C_p$, whereas
+\cite[Lemma~3.11]{LeungSchmidtZhang2023} only needs the two absolute
+values $|X|^2=|Y|^2=pw$.
+(d) \emph{Relation to \cite{Feng2009}.} Feng \cite[Lemmas~2, 3]{Feng2009}
+expands $T\in\F_p[E\times\langle a\rangle]$, $p\nmid|E|$, in powers of
+$a-1$, using that $\F_p[E]$ is semisimple, and on p.~99 uses that
+$\binom{i+k}{k}$ is a polynomial of degree $k$ in the exponent $i$ to
+bound the degree of the fibre functions. Lemma~A uses the same device.
+What is new is its use over the ramified ring $W[\zeta_p]$, with $j$ as
+the variable and counting over all $p$ points of $\F_p$, and the
+conclusion that the product $c_\alpha d_\beta$ is constant, which forces
+residue $1$.
+(e) \emph{Checks.} Complete enumerations of all $F$ with $FF^*=n$ up to
+symmetry, for $(p,d,n)$ in $\{(5,4,5)$, $(5,3,5)$, $(5,3,15)$,
+$(5,3,20)$, $(5,6,30)$, $(5,8,5)$, $(5,8,10)$, $(7,4,7)$, $(7,4,14)$,
+$(11,1,11)\}$, show no violation \deptag{Comp}.
+\end{remark}
+
+\subsection{A ramified alternating product}\label{ssec:B}
+Let $p\ne q$ be primes, $e\ge1$, and $G'=C_p\times C_{q^e}$. Call
+$n\in\Z_{>0}$ \emph{admissible} if (A1) $v_p(n)=1$ and $v_q(n)\le e$, and
+(A2) every prime $r\mid n$ with $r\nmid pq$ is self-conjugate modulo
+$pq$. For $x\in\Z[\zeta_p][G']$, $\theta\in\mu_p$ and $\rho\in\mu_q$
+(viewed as characters of $C_p$ and of $C_{q^e}$) write $x(\theta,\rho)$
+for the character value.
+
+\begin{theorem}\label{thm:B}
+Let $x\in\Z[\zeta_p][G']$ satisfy $xx^*=n$ with $n$ admissible. Then
+\[
+ x(1,1)\,x(\theta,\rho)=x(\theta,1)\,x(1,\rho)\qquad\text{for all }
+ \theta\in\mu_p,\ \rho\in\mu_q .
+\]
+\deptag{Lean, for $x=X_a$ with entries in $\mu_p$ and $n=pq^e$, inside
+the proof of Theorem~\ref{thm:C}}
+\end{theorem}
+
+\begin{proof}
+The claim is trivial if $\theta=1$ or $\rho=1$; let $\theta\ne1\ne\rho$.
+All character values are nonzero since $|x(\cdot,\cdot)|^2=n$. Put
+\[
+ \Delta=\frac{x(\theta,\rho)\,x(1,1)}{x(\theta,1)\,x(1,\rho)}\in
+ \Q(\zeta_{pq}),\qquad B=\Z[\zeta_{pq}].
+\]
+We show that $\Delta$ is a unit of $B_\m$ for every maximal ideal $\m$ of
+$B$, with residue $1$ if $\m$ lies above $p$ or $q$.
+
+\emph{Primes above $p$ (ramified).} Let $\m\mid p$ and
+$\rho'\in\{\rho,1\}$. The partial evaluation of $C_{q^e}$ at $\rho'$
+gives $F\in\Z[\zeta_p,\zeta_q][C_p]$ with $FF^*=n$. Here $\cO=B$ ($d=q$)
+and $v_\m(n)=(p-1)v_p(n)=p-1$ by (A1). By Lemma~\ref{lem:A},
+$x(\theta,\rho')/x(1,\rho')=F(\theta)/F(1)$ is a unit of $B_\m$ with
+residue $1$; taking the quotient of the cases $\rho'=\rho$ and $\rho'=1$,
+so is $\Delta$.
+
+\emph{Primes above $q$ (unramified, with descent).} Let $\m\mid q$ and
+$\theta'\in\{\theta,1\}$. Let $A$ be the localization of
+$A_0=\Z[\zeta_p]$ at $\m\cap A_0$; $q$ is unramified in $A_0$. The
+partial evaluation of $C_p$ at $\theta'$ gives $F,F^*\in A_0[C_{q^e}]$
+with $FF^*=n=q^fb$, $f=v_q(n)\le e$ by (A1), $b\in A^\times$. By
+Lemma~\ref{lem:comparison}, $x(\theta',\rho)/x(\theta',1)=F(\rho)/F(1)$
+is a unit of $A[\rho]\subseteq B_\m$ with residue $1$; taking the
+quotient of the cases $\theta'=\theta$ and $\theta'=1$, so is $\Delta$.
+
+\emph{Other primes.} Let $\m$ lie above $r\nmid pq$. If $r\nmid n$, all
+four values divide $n$ and are units at $\m$. If $r\mid n$, then by (A2)
+and Lemma~\ref{lem:selfconj} (with $L=pq$) every prime of $B$ above $r$
+is self-conjugate, so each of the four values $\alpha$ has
+$v_\m(\alpha)=\frac12v_\m(n)$, and $v_\m(\Delta)=0$.
+
+\emph{Conclusion.} Hence $\Delta\in\bigcap_\m B_\m=B$. Every embedding of
+$\Q(\zeta_{pq})$ commutes with complex conjugation, so $\Delta$ has
+absolute value $1$ under every embedding and is a root of unity
+(Lemma~\ref{lem:torsion}(i)). It has residue $1$ at a prime above $p$
+and at a prime above $q$, so by Lemma~\ref{lem:torsion}(ii) its order is
+a power of $p$ and a power of $q$: $\Delta=1$.
+\end{proof}
+
+\begin{remark}\label{rem:B}
+(a) \emph{Both sides are needed.} Lemma~A alone only shows that $\Delta$
+is a root of unity of $p$-power order: since $\zeta_p\equiv1$ modulo every
+prime above $p$, the ramified side cannot see $\Delta=\zeta_p^k$. It is
+the congruence at $q$ that excludes $\zeta_p^k\ne1$.
+(b) \emph{Admissibility is needed.} For (A2): with $(p,q,e)=(3,2,2)$ and
+$n=12\cdot49$ ($7$ is not self-conjugate modulo $6$), in a sample of
+$20{,}000$ of the $38{,}263{,}752$ elements $x$ with $xx^*=n$, $\Delta\ne1$
+in $30{,}616$ of $40{,}000$ checks, and $\Delta$ need not be integral (e.g.\
+$\frac57-\frac87\zeta_3^2$); with $n=12\cdot25$ ($5$ is self-conjugate
+modulo $6$) all $52{,}488$ elements have $\Delta=1$ \deptag{Comp}. For
+(A1): Feng's $(56,7,56,8)$-RDS \cite[Thm.~9]{Feng2009} gives a perfect
+$\mu_7$-array on $C_7\times C_2^3$; its contraction to $C_7\times C_2$
+has norm $56$, with $v_2(56)=3>e=1$, and $\Delta\ne1$ in $24$ of $42$
+cases \deptag{Comp}. The condition $v_p(n)=1$ is needed by
+Remark~\ref{rem:A}(b).
+\end{remark}
+
+\subsection{Proof of Theorem~\ref{thm:C}}\label{ssec:proofC}
+Let $a$ be perfect on $C_{pq^eu}\cong C_p\times C_{q^e}\times C_u$ with
+values in $\mu_p$, and let $x=\pr_u(X_a)\in\Z[\zeta_p][C_p\times
+C_{q^e}]$, so that $xx^*=pq^eu$; this $n$ is admissible. Write
+$x=\sum_{a'\in\Z/p}Z^{a'}H_{a'}$ with $C_p=\langle Z\rangle$ and
+$H_{a'}\in\Z[\zeta_p][C_{q^e}]$; each coefficient of $H_{a'}$ is a sum of
+$u$ elements of $\mu_p$.
+
+\emph{Step 1: proportional projections.} For $j\in\Z/p$ let
+$g_j=\sum_{a'}\zeta_p^{ja'}H_{a'}$ (the partial evaluation
+$Z\mapsto\zeta_p^j$). Theorem~\ref{thm:B} with $\theta=\zeta_p^j$ gives
+$g_0(1)\,g_j(\rho)=g_j(1)\,g_0(\rho)$ for all $\rho\in\mu_q$. Since
+$|g_0(1)|^2=pq^eu\ne0$, Fourier inversion on $C_q$ gives
+$\pr_q(g_j)=\kappa_j\,\pr_q(g_0)$ with $\kappa_j=g_j(1)/g_0(1)$.
+
+\emph{Step 2: a contradiction modulo $\lambda=1-\zeta_p$.} By Fourier
+inversion on $C_p$, $H_0=\frac1p\sum_jg_j$, so
+$E:=\pr_q(H_0)=c_0\,\pr_q(g_0)$ with $c_0=\frac1p\sum_j\kappa_j$. Hence
+$EE^*=c_0\conj{c_0}\,\pr_q(g_0g_0^*)=c_0\conj{c_0}\,pq^eu$ is a scalar.
+Each coefficient of $E\in\Z[\zeta_p][C_q]$ is a sum of $q^{e-1}u$
+elements of $\mu_p$, hence $\equiv q^{e-1}u\pmod\lambda$. Complex
+conjugation induces the identity on $\Z[\zeta_p]/\lambda=\F_p$, so in
+$\F_p[C_q]$ we get $\red E\red E^*=q^{2e-2}u^2J_qJ_q^*=q^{2e-1}u^2J_q$,
+with $J_q$ the sum of the elements of $C_q$; it has a nonzero
+coefficient at every element of $C_q$, as $p\nmid qu$. But the reduction
+of the scalar $EE^*$ is a scalar. \qed
+
+\begin{corollary}\label{cor:C-rds}
+For primes $p\ne q$ and $e\ge1$ there is no abelian
+$(pq^e,p,pq^e,q^e)$-RDS in a group whose Sylow $q$-subgroup is cyclic.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:exponent} the group is $C_p\times C_p\times Q$
+with $|Q|=q^e$; the forbidden subgroup, of order $p$, is a direct factor,
+and Proposition~\ref{prop:rds-split} gives a perfect $\mu_p$-map on
+$C_p\times Q\cong C_{pq^e}$ when $Q$ is cyclic.
+\end{proof}
+
+\begin{remark}\label{rem:C}
+(a) \emph{Cyclicity is needed.} Feng \cite[Thm.~9]{Feng2009} constructs a
+$(56,7,56,8)$-RDS in $C_7^2\times C_2^3$, i.e.\ a perfect $\mu_7$-array on
+$C_7\times C_2^3$; an exhaustive search finds $11{,}854{,}080$ such arrays
+and none on $C_7\times C_8$ \deptag{Comp}.
+(b) \emph{The proof fails at the right place on existing objects.} For
+the $400$ perfect $\mu_{10}$-sequences of length $20$, Lemma~A,
+$\Delta=1$ and the proportionality of Step~1 all hold; Step~2 fails
+because the alphabet is $\mu_{10}\ne\mu_5$ and the coefficients are not
+$\equiv q^{e-1}u$ modulo $\lambda$ \deptag{Comp}.
+(c) \emph{When $p^2$ divides the length.} The analogue of Lemma~A at
+$v_\fP(n)=2(p-1)$ is false: for $p=5$, $\cO=\Z[\zeta_{20}]$ and
+$FF^*=25$, the valuation of $F(\zeta^j)$ is non-constant for
+$2{,}366{,}200$ of the $2{,}592{,}720$ elements (up to normalization), and
+ratio residues of Gauss-sum type occur \deptag{Comp}. We do not know a
+replacement strong enough to treat $\BH(p^2q^e,p)$.
+\end{remark}
+
+\subsection{Earlier results on this family}\label{ssec:knownC}
+In the alphabet $\mu_p$ and with cofactor $q^e$ (in
+\cite{LeungSchmidtZhang2023} the letters are interchanged), $f=\ord_p(q)$,
+the following earlier criteria apply to $\BH(pq^e,p)$, $p$ odd, $e\ge2$:
+\cite[Thm.~3.3]{DoDuc2019} ($q$ self-conjugate modulo $p$; this contains
+\cite[Thms.~5.1(a), 5.3]{LeungSchmidtZhang2023} for these parameters, the
+result of Ma and Ng \cite{MaNg2009} as quoted in
+\cite[Sect.~1]{Lv2017}, and Brock's condition \cite{Brock1988} as stated in
+\cite[Result~1.4]{DoDuc2019});
+\cite[Thms.~3.7, 3.11]{DoDuc2019}, the latter for odd $e$ ($f\le q^e$ or
+$p\le(f^2-q^e)/(f-q^e)$, and $p\le q^{2e}+q^e+1$, which is also
+\cite[Thm.~5.1(b)]{LeungSchmidtZhang2023});
+\cite[Thm.~5.4]{LeungSchmidtZhang2023} for even $e$; $q^e$ a square
+modulo $p$ \cite[Prop.~8]{Feng2009}; $q^e\equiv1\pmod5$ if $p=5$
+\cite[Prop.~5]{Feng2009}; $q^e\ne4$ \cite{FengXiang2008}; the results of
+Liu and Feng \cite{LiuFeng2015} and of Lv \cite[Thm.~1.5]{Lv2017}, as
+stated in \cite[Sect.~1]{Lv2017} (\cite[Thm.~1.3]{Lv2017} needs $q$ to
+divide the length exactly once); and Schmidt's field-descent bound
+\cite{Schmidt1999,LeungSchmidt2005} in the form (C4) of
+Appendix~\ref{app:quaternary} with $h=p$, with both descent exponents.
+The count of $34$ new lengths above is relative to these criteria; the
+field-descent bound alone excludes, e.g., $147$, $507$, $605$, $1029$,
+$1083$, and \cite[Thm.~3.11(ii)]{DoDuc2019} excludes $376$ and $568$.
+For $(56,7)$, $p=7$ is self-conjugate modulo $8$, and Feng's structure
+theorem \cite[Thm.~7]{Feng2009} applies, but it does not exclude
+$E=C_8$. For $(99,11)$ the condition of
+\cite[Thm.~5.4(ii)]{LeungSchmidtZhang2023} reads $5>5$. For $(1400,7)$,
+\cite[Thm.~3.11]{DoDuc2019} and \cite[Thm.~5.1(b)]{LeungSchmidtZhang2023}
+give only $7\le200^2+200+1$ and $7\le8^2+8+1$,
+\cite[Thm.~5.3]{LeungSchmidtZhang2023} (with $q=5$, $m'=1$, $n'=7$) gives
+only $35\le206$, \cite[Thm.~5.4]{LeungSchmidtZhang2023} needs $200$ to be
+a square, and $200\equiv2^2\pmod7$ \deptag{Comp}.
+In Yayla's table \cite{Yayla2016}, $(56,7)$ and $(99,11)$ were the two
+undecided pairs not covered by Theorem~\ref{thm:S},
+\cite{FengXiang2008} or \cite[Thm.~6.5]{LeungSchmidtZhang2023}.

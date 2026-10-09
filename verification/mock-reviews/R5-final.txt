@@ -1,0 +1,281 @@
+R5 终审意见（JCTA 级敌意审稿人，合并稿终审）
+论文：Group-Invariant Butson Hadamard Matrices and a Prime Dividing the Order Exactly Once
+对象：preprintBH/main.pdf（18 页，2026-10-09 04:07 编译，与 sections/*.tex 时间戳一致）
+对照：R1-JCTA.txt、R2-SIDMA.txt、R3-shortS.txt、R4-noteC.txt、MERGED-FIXES.md
+日期：2026-10-09
+未修改论文。唯一的副作用：在 preprintBH/scripts/ 下运行 ramified_new.py 时，脚本按设计重写了
+ramified_new_2000.txt。输出是确定性的，内容与原文件一致。我自己的核查脚本只放在 /tmp
+（/tmp/indep.py、/tmp/recon.py、/tmp/eq37.py），没有写进项目目录。
+
+======================================================================
+0. 总体结论
+======================================================================
+数学部分我又完整复核了一遍，没有发现错误。复核范围：Theorem 1.1（S′）、Lemma 2.1（column lemma）、
+Corollary R（cor:R）、Corollary 1.2（square-free）、cor:doduc、cor:ksw、Lemma 3.6（lem:Feq，即旧编号
+Lemma 5.7）、Lemma 4.x（local / comparison / torsion）、Lemma A、Theorem B、Theorem C(i)(ii)、
+Corollary 4.14。
+
+R4 的六个关键项全部落实。R3 的条目中，凡是作者一侧能做的都已做完，剩下的只有用户事项。
+新的"34 个新长度"能独立复现。它修正了 R4 自己的一个错误：R4 把 (605,5) 算作新长度，但 Schmidt
+的 field-descent 界其实排除了它。
+(63,3) 的措辞诚实且准确，但信息不够完整，见 §3。
+
+除用户事项外，没有任何阻碍投稿的问题。下面的残留修改都属 minor 或可选。
+
+======================================================================
+1. R3 / R4 逐项核对（yes / partly / no）
+======================================================================
+R4（preprintC 合并部分）
+ F1 引用 Do Duc 2020 Thm 3.3，新范围改为"q 模 p 不自共轭" —— yes。
+    035-ramified.tex 的 "What is new" 段写明：q 模 p 自共轭 ⇒ q 模 lcm(pq^e,p)=pq^e 自共轭
+    ⇒ [DoDuc2019, Thm 3.3] 对一切 e 排除。以 (75,3) 为例。新范围定为 "p odd, e≥2, q not
+    self-conjugate modulo p"。引言 (f) 也同步写了。
+ F2 删去摘要中的 "unramified methods do not apply" —— yes。摘要已改写。
+    残留一处措辞："neither do the self-conjugacy methods" 说过头了，见 §5 第 2 条。
+ F3 Theorem C(ii) 的新颖性 —— yes。正文写明 q 奇且 u 为素数幂时 Do Duc 3.3 适用，lifting
+    论证正确：r^j≡−1 (mod q) ⇒ r^{jq^{e−1}}≡−1 (mod q^e)，q 奇。以 (1400,7) 为真正的新实例，
+    我独立核过（见 §2.4）。
+ F4 q 侧下降引 Ma 引理 —— yes。引了 [Ma1985]、[MaSchmidt1995, Lemma 3.1]、
+    [DoDuc2019, Result 2.4]，并说明 Φ_{q^e}(T) 就是 q 阶子群之和；[OpenAI2026] 降为 "see also"。
+ F5 Lemma A 与 LSZ 3.11 互不蕴含，并引 Feng 2009 p.99 —— yes。
+    Remark A(c) 明确写 "The two lemmas do not imply each other"，指出群环恒等式 FV=n 与
+    |X|²=|Y|²=pw 的区别。Remark A(d) 引了 Feng p.99 的 C(i+k,k) 多项式论证，我在
+    feng2009.pdf 第 99 页核对过。新意限定为三点：分歧环、全部 p 个点、乘积常数推出剩余为 1。
+ F6 Theorem B 的 Lean 标签收窄 —— yes。现为 [Lean, for x=X_a with entries in μ_p and n=pq^e,
+    inside the proof of Theorem C]。§6 正文和 Table 1 一致；Lemma 4.x（comparison）注明
+    "not formalized as stated"。
+    残留：摘要 "the comparison lemma ... formalized" 没有加 "for integer n"（minor，见 §5）。
+ F7 Lemma 2.6(ii)（现 lem:torsion(ii)）一般阶 —— yes。已补上：阶为 ℓ^a s 时取 ζ^{ℓ^a}，正确。
+ F8 Lemma 2.4 补"有限 ⇒ 极大理想在 q 上方"；Lemma A 末句展开 —— yes，两处都已补。
+ F9 (56,7) 补引 Feng Thm 7 —— yes。
+ F10 补引 Ma–Ng、Liu–Feng、Lv —— yes。§4.5 都注明了 "as stated in [Lv17, Sect.1]"。
+ F11 (63,3) 与 Do Duc 开放表的矛盾 —— yes（措辞见 §3）。
+ F12 作者、AI 声明、致谢 —— 用户事项。致谢段已删除；AI 声明源文件注释仍写 "DRAFT"，
+     这不进 PDF。
+
+R3（短文部分）
+ 1 LCZ25 全文 —— partly（用户事项）。作者一侧已做到可做的程度：
+   - 正文转述补上了 "order 6 classification"；
+   - 计数写成 "subject to [LCZ25]"，并给出 474（其中 17 个 n=6）这一受影响数字；
+   - 举例换成非 2p 的 (15,12)、(21,9)、(39,13)、(30,16)、(30,90)。我核过：前四个在
+     remaining_2262.txt 里，(30,90) 在 remaining_61.txt 里。
+   - "(to be checked)" 已删除，代之以一个 "Pending" 脚注。
+ 2 清除 "(to be checked)" 和占位符 —— yes / 用户。PDF 全文 grep 结果：只剩作者行
+   "Author information will be added in the final version."、§5 的 Pending 脚注，以及 §6.3 的
+   "will be committed there at release"。三者都属于用户事项。CompanionC 已不再引用。
+   PDF 中没有内部路径（verifyNonsplit、/home、/tmp 均无）。
+ 3 Corollary R 的 Lean 位置统一 —— yes。
+   - TheoremS/RDS.lean 文件头已改，不再写 "verification copy"；
+   - 正文写 "depend only on Mathlib"；
+   - 命名空间仍是 TheoremS.RDSCheck，与 Table 1 一致（只是外观问题，可留）。
+ 4 LS12 Ex 3.2 的 863² 脚注 —— yes（已删除，是否发 erratum 由用户决定）。
+ 5 Artifact —— partly。
+   - HS 表已有转写文件 hs_table1.txt，deduct.py 不再依赖 /tmp；
+   - 脚本注释写明了 Yayla 表的覆盖范围；
+   - 我重跑 deduct.py，得到 2025+38=2063；
+   - TheoremS/ 在 fork 中仍是 untracked，没有 commit hash（用户事项）。
+ 6 Corollary 1.2 的细节 —— partly。
+   - 没写 "h positive"；
+   - 充分性仍只经 [DoDuc2019, Result 4.1] 与 "constructions of Mow and of Duc and Schmidt"，
+     没有直接引 DS19 Cor 2.5 / Schmidt 综述 Thm 4.1.7；
+   - 陈述旁没有 [Lean-derived] 标签（Table 1 已归入 Derived）。
+   都是 minor，见 §5。
+ 7 Table 1 的 two_mod_four 行 —— yes。
+ 8 剩余对的 field-descent 复查 —— yes，已写入正文。我重跑过：2063 对中命中 0 对。
+ 9 其余付费文献全文与专家咨询 —— 用户事项。
+
+======================================================================
+2. 分歧情形计数 34 的复核
+======================================================================
+2.1 复现
+  python3 preprintBH/scripts/ramified_new.py → 334 个长度，其中 34 个为 NEW，列表与正文
+  035-ramified.tex 完全一致。300 个被既有判据覆盖。(75,3) 被 DD3.3、DD3.7、Fdesc 覆盖。
+  (1400,7) 的各项检查输出与正文一致。R4 的 42 个减去
+    {147, 507, 605, 1029, 1083}（Fdesc）、{376, 568}（DD3.11(ii)）、{568, 1917}（LF16）
+  这 8 个，正好等于 34。
+
+2.2 脚本逻辑
+  - DD3.3：取 selfconj(q,p)，正确。lcm(n,h)=pq^e，q-free 部分为 p。
+  - DD3.11(i)（f 偶）没有单列，但 f=ord_p(q) 为偶数 ⇒ q^{f/2}≡−1 (mod p) ⇒ DD3.3 已覆盖，
+    不会漏。
+  - Brock（Result 1.4）：square-free 部分中与 h 互素的素数只能是 q（e 奇时），条件等价于
+    q 模 p 自共轭，已被 DD3.3 覆盖。
+  - Lam–Leung 和 Thm 3.2 对该族不起作用。
+  - LSZ 2024/2025（只看过摘要）的自共轭条件对该族也落在 DD3.3 内。
+  - Fdesc：对每个 d|n 取 L=lcm(h,d)，C=nh/L。系数上界成立：(a,b)↦aL/h+bL/d 的核的阶为 hd/L，
+    每个剩余类有 n/d 个元素，所以 c_t ≤ nh/L。F(L,n) 的每个素因子都整除 L，所以
+    Q(ζ_L)/Q(ζ_F) 有单位根基 {ζ_L^s: s<L/F}，descent 之后系数仍落在 [0,C]，可以套用
+    Lemma 3.6 的不等式。逻辑正确。
+  - LF16 和 Lv1.5 依据的是 Lv 2017 §1 的二手转述，正文已如实注明。
+  结论：脚本没有逻辑错误。"34" 是相对于正文列出的判据而言的，正文也这样写了。
+
+2.3 用独立实现复核 Fdesc（我自己按 LS05 Def 2.6 用 sympy 写的 F，不复用 fdesc.py）
+  对全部 334 个长度，Fdesc 命中的集合与脚本完全一致（25 个）：
+    75, 147, 192, 320, 375, 384, 405, 507, 567, 605, 640, 768, 845, 867, 1029, 1083, 1215,
+    1280, 1445, 1536, 1587, 1701, 1715, 1805, 1875。
+  逐个手算：
+   - (605,5)：605=5·11²。b_11=1，因为 5^{ord_11 5}=5^5=3125≡100≢1 (mod 121)。F=55，φ=40，
+     C=5（d=605 或 121）。界为 25·3025/160 = 472.66 < 605，所以被排除。✓
+     R4 把它列为"新"是 R4 的错误；论文的修正是对的。
+   - (147,3)：3^6≡43 (mod 49)，F=21，C=3，界 82.69 < 147。✓
+   - (507,3)：3^3=27≢1 (mod 169)，F=39，界 142.59 < 507。✓
+   - (1029,3)：F=21（7 的指数 c=3，但 b=1），界 82.69 < 1029。✓
+   - (1083,3)：3^18≡343≢1 (mod 361)，F=57，界 203.06 < 1083。✓
+  这五个都只被 Fdesc 覆盖，与正文 "the field-descent bound alone excludes, e.g., 147, 507,
+  605, 1029, 1083" 一致。
+  另外，147、507、1029、1083 的 q 都不模 3 自共轭（7、13、19 ≡ 1 mod 3），确实不在 DD3.3 内。
+
+2.4 其余指定项
+  - (376,47)：ord_47 2 = 23，m=8 不是平方数，f>m，且 (f²−m)/(f−m)=34.73 < 47
+    ⇒ Do Duc 3.11(ii) 排除。✓
+  - (568,71)：ord_71 2 = 35，(1225−8)/27=45.07 < 71 ⇒ 3.11(ii) 排除。✓
+    Liu–Feng 的条件：71≡3 (mod 4)；(2/71)=1；f=35 为奇数；s=2；λ=7（512=21²+71·1²，更小的
+    奇数 λ 都无解）；e=3 < 3.5 ⇒ 覆盖。✓
+  - (1917,71)：1917=71·27。ord_71 3 = 35，(3/71)=1，λ=7，e=3 < 3.5 ⇒ Liu–Feng 覆盖。✓
+    3.11(ii) 不适用（71 ≤ 149.75），所以这一排除只依赖二手转述的 Liu–Feng；正文已注明出处。
+  - (56,7)：
+      DD3.3 不适用（ord_7 2=3 为奇数）。
+      DD3.7：u=7（7≡−1 mod 8），w=1，不排除。
+      3.11：f=3≤8，且 7≤73。
+      Feng P8：8≡1 是平方。FX08：8∉{2,4}。
+      LF16：λ=1（8=1+7），e=3 不小于 1/2。
+      Fdesc：F(56,56)=56，C=7，界 1600.7 > 56；其余 d 的界更大。
+    结论：新。✓
+  - (847,7)：847=7·11²。
+      11≡4 (mod 7)，ord=3 为奇数，DD3.3 不适用。
+      e=2 偶数，LSZ5.4：v1=11，3>21 不成立。121 是平方，P8 不适用。
+      Fdesc：7^10≡23≢1 (mod 121)，F=77，界 1210.5 > 847。
+    结论：新。✓
+  - (1400,7)，Theorem C(ii)，q=2，e=3，u=25：
+      5 模 14 自共轭（5^3=125≡13≡−1 mod 14），满足 (ii) 的假设。
+      DD3.3：模 1400，2 的 2-free 部分为 175，2 模 7 的阶为奇数，所以 2 不自共轭；5 的 5-free
+      部分为 56，5 的奇次幂 ≡5 (mod 8)，而 ≡−1 (mod 7) 要求奇次幂，所以 5 也不自共轭；
+      因此 DD3.3 不适用。
+      DD3.7：7 模 200 不自共轭（模 8 要求 j 奇，模 25 要求 j≡2 mod 4，矛盾），u=1，不排除。
+      Fdesc 无命中；Brock 不适用（square-free 部分 14 是偶数）。
+    结论：新。✓
+  - (99,11)：
+      ord_11 3 = 5 为奇数，DD3.3 不适用。
+      LSZ5.4 的条件读作 5>5，不成立。9 是平方，P8 不适用。
+      Fdesc：F=33，C=11，界 1647 > 99。
+      DD3.7：u=11（11≡2 mod 9，2^3≡−1），w=1，不排除。
+    结论：新。✓
+  Corollary 4.2（cor:C-new）的四个长度全部确认。
+
+======================================================================
+3. (63,3) 的措辞
+======================================================================
+正文（§3.6）："The pair (63,3) does not occur in Do Duc's list, although none of the results
+from which that list is derived (Results 1.1–1.4, Thms 3.2, 3.3, 3.7, 3.11) excludes it; we
+do not know whether it was excluded earlier."
+
+字面核对：准确。我按 1903.07334v2 的原文逐条在 (63,3) 上验算：
+  - Result 1.1(2) 要求 63=3pq 且 p,q>3，不满足；
+  - Brock：square-free 部分 7，7≡1 (mod 3)，不适用；
+  - Thm 3.3：7 模 9 的阶为 3，不自共轭；
+  - Thm 3.7：u=9，w=3 = 2^0·(3,9)·1，等号成立，不排除；
+  - Thm 3.11：f=1≤7，且 3≤57，不排除。
+另外，Yayla 的表本身把 (63,3) 列为未决。所以 "we do not know whether it was excluded earlier"
+是诚实的。
+
+但这句话不完整，会让读者以为 (63,3) 是孤立的反常。我按论文所列的 Results 1.1–1.5 和
+Thms 3.2/3.3/3.7/3.11，从头重建了 Do Duc 的开放表（/tmp/recon.py）。结果：重建集合是发表列表的
+真超集，2720 ⊋ 2687，多出 33 对：
+  (a) (42,3)、(63,3)、(78,3)：都是 3pq，p,q 为不同素数，但其中一个 ≤3；
+  (b) (14,33)、(20,51)、(26,69)：都是 (3+q, 3q)；
+  (c) (98,7)：由 (98,14)=Result 1.1(1) 推出，因为 BH(n,p) ⊂ BH(n,2p)；
+  (d) n=54 一行中的 26 对：原因不明。
+(a) 和 (b) 的模式说明，Do Duc 生成列表时很可能在 Result 1.1(2)(3) 上没有加 "p,q>3" 的限制
+（或者 Ma–Ng 原文的条件本来更宽，但该文付费，我们没读到）。
+
+建议把这句话改成：
+  "(63,3) does not occur in Do Duc's list, although none of the results from which that
+   list is derived excludes it as stated; the same holds for (42,3), (78,3) (lengths 3pq
+   with p or q ≤ 3) and (14,33), (20,51), (26,69) (= (3+q,3q)), which suggests that Results
+   1.1(2),(3) were applied without the restriction p,q>3. (63,3) is listed as undecided in
+   Yayla's table; we do not know whether it was excluded earlier."
+这样既保持诚实，又给出了可以核验的解释。这一项是可选改进，不阻碍投稿。
+论文的计数是相对于"已发表的列表"做的，所以这些差异对 2323/2063 等数字没有影响。
+
+======================================================================
+4. 全文复核：正确性、夸大、占位、Lean 标签范围
+======================================================================
+- Theorem 1.1（S′）：
+  Sylow p 子群是循环的直和因子 ✓；μ_h ⊆ ±μ_{h'}，p∤L ✓。
+  column lemma：(O/𝔭)[C_p] ≅ F[T]/(T−1)^p 是局部环；v_𝔭(n)=1 推出 F(1)、conj F(1) 恰有一个在 𝔭 中，
+  于是 F 或 F* 模 𝔭 为零 ✓。
+  单陪集 Parseval：Σ_χ|χ(c_k)|² = |H|² ∈ 𝔭∩Z = pZ，与 p∤|H| 矛盾 ✓。
+  p=2、h≡2 (mod 4) 的分支正确。Lean 陈述与正文逐字一致（Sharp.lean:140）✓。
+- Corollary R：φ=ψ^{p^v} 的阶与 p 互素，且 φ(x)≠1；由差分计数得到完美函数 G/N→μ_h；
+  p∥|G/N| 且 p∤h，由 S′ 排除 ✓。"包含 LSZ23 §6 的全部不存在性结论" 已由 R3 核过 ✓。
+- Corollary 1.2：必要性由 S′ 得到（奇 p 须 p|h；p=2 须 4|h）。充分性由 Do Duc Result 4.1：
+  n|(h,n)² 且 (ν_2 n, ν_2 h)≠(1,1) ✓。数学正确。措辞细节见 §1 R3-6。
+- cor:doduc ✓。cor:ksw：q≡2 (mod 4) ⇒ 2∥q 且 4∤h=q，所以 2 不分歧 ✓；bent 与 perfect 的等价 ✓。
+  [Lean-derived] 标签恰当。
+- Lemma 3.6（lem:Feq，旧 Lemma 5.7）：
+  D′ 平移不改变本原特征值；Parseval 给出 φ(F)n ≤ F²C²/4 ✓。
+  等号情形：d_i∈{0,C}，且非本原特征处 D′=0，其中包括所有阶整除 F/r 的特征（含平凡特征）；
+  像为 (r/2)·J，与整系数矛盾 ✓。
+  Table 2 的七个长度 R3 已核过。1800 的示例计算 ✓。
+- 分歧部分：
+  Lemma local、Lemma comparison（f≥2 的下降、对 f 的归纳、e−1≥1 的要求）✓；
+  Lemma A（数字多项式的次数 ≤t；α=0、β=0 的边界；α+β=p−1；首位数字的乘积为常数）✓；
+  Theorem B 的三类素理想以及 Kronecker、torsion 收尾 ✓；
+  Theorem C 的 Step 1 和 Step 2 ✓；
+  Corollary 4.14（Pott 指数定理 ⇒ C_p×C_p×Q；N 有补）✓。
+  (ii) 中 n=pq^eu 满足 admissible 条件 (A1)(A2) ✓。
+- Lean 标签范围：
+  Thm S、Cor doduc、Cor R 标 [Lean] ✓；Cor 1.2、cor:ksw、cor:arasu 标 Derived ✓；
+  Lemma A 标 [Lean, n∈Z] ✓；Theorem C(i) 标 [Lean] ✓；Theorem B 已收窄 ✓。
+  Theorem C(ii)、Cor 4.2、Cor 4.14、comparison lemma 未形式化，Table 1 都写明了 ✓。
+  我复核了 lemmaA（LemmaA.lean:59）和 not_exists_perfect_prime_power_phase（PrimePower.lean:823）
+  的陈述，与 §6 的 Verbatim 一致。两个目录 grep 不到 sorry/admit/native_decide/axiom。
+- 占位符和 TODO：PDF 中只有 §1 第 2 条列出的三处，都是用户事项。源文件中的 "% DRAFT" 注释
+  不进 PDF，但公开源文件前应删除。
+- 夸大：
+  (i) 摘要说 "the comparison lemma ... formalized"，应收窄为 "for integer n"；
+  (ii) "neither do the self-conjugacy methods"：Do Duc Thm 3.7 和 Feng Thm 7 都用到 p 模 q^e 的
+      自共轭性，例如 (56,7) 中 7≡−1 (mod 8)。它们"适用但不足以排除"，而不是"不适用"。
+  其余数量性陈述都带有 "known to us"、"criteria we implemented"、"subject to [LCZ25]" 一类
+  限定语，措辞得当。
+
+======================================================================
+5. 最终建议
+======================================================================
+JCTA：建议投稿，预计结果为 minor revision。
+  合并之后，论文有一个短而干净的主定理，加上一串实打实的推论：Mow/Do Duc 猜想在 square-free
+  长度成立、KSW m=1、Arasu 的 11 个阶、Corollary R 覆盖 LSZ23 §6；再加上分歧情形的新引理
+  Lemma A，以及一个无限族 Theorem C。这个分量符合 JCTA 的标准，R4 担心的"分量不足"随合并
+  消失了。
+  主要风险仍是先行文献：如果 LCZ25 已含 n=2p，或者 ADM02/Pott/Schmidt LNM 里已有 S′ 的
+  循环情形，审稿人会要求重新定位。这一点只能靠用户读全文来消除。
+
+SIDMA：可以投，但列为次选。证明以代数数论为主（分歧、局部环、descent），对 SIDMA 读者偏专，
+  预计 minor 到 major。若投 SIDMA，引言须多写组合与序列方面的动机。首选 JCTA。
+
+残留修改清单（都不是硬性阻碍，按优先级排列）
+ 1. [推荐] §3.6 关于 (63,3) 的句子按 §3 补全：加上 (42,3)、(78,3)、(14,33)、(20,51)、(26,69)
+    的规律以及 Yayla 未决的事实。
+ 2. [推荐] "What is new" 段：把 "neither do the self-conjugacy methods" 改为 "and the
+    self-conjugacy argument at q ([DoDuc2019, Thm 3.3]) does not apply"。
+ 3. [推荐] 摘要：在 "the comparison lemma" 后加 "(for integer n)"。
+ 4. [小] Corollary 1.2：写明 "positive integers n, h"；充分性同时引 [DucSchmidt2019, Cor 2.5]
+    或 [Schmidt2016survey, Thm 4.1.7]；陈述旁加 [Lean-derived] 标签，与 Table 1 一致。
+ 5. [小] Do Duc 的定理编号（Thm 3.3/3.7/3.11、Result 4.1、Remark 3.13）取自 arXiv v2，
+    而 bib 指向 DCC 88 (2020)。投稿前应对照期刊版核对编号，或在 bib 中注明
+    "numbering of arXiv:1903.07334v2"。
+ 6. [小] (ii) 段 "applies whenever some prime divisor r of u ..." 是充分条件；q 自身模 p·u
+    自共轭时也适用。可以加半句，也可以不改。
+ 7. [artifact] ramified_new.py 把输出写到当前工作目录；check_63_3.py 的默认输入路径指向
+    ../../release/...。打包时应改成相对于 artifact 根目录的路径（ARTIFACTS.md §4 第 3 条已
+    列入）。
+
+是否有用户事项以外的阻碍：没有。
+用户事项共四项，投稿前必须完成：
+ (1) 读 LCZ25 以及其他付费文献（ADM02、Ma96、Ma–Ng 09、Pott、Schmidt LNM、de Launey–Flannery、
+     Mow95 等），并据此删除或改写 §5 的 "Pending" 脚注、"subject to [LCZ25]" 以及 474/17 的
+     说明；
+ (2) 填写作者信息；
+ (3) 确认 AI 使用声明；
+ (4) 提交 TheoremS/ 并在 §6.3 填入 commit hash。
+上面第 1–7 项都是 minor 或可选的文字与打包修改，不构成阻碍。
