@@ -122,13 +122,11 @@ script. These enumerations were written independently of the programs
 that first produced the corresponding claims.
 
 \subsection{Artifact and data availability}\label{ssec:artifact}
-The Lean development is on the branch
-\path{contrib/general-norm-extensions} of our fork of the Lean library of
-\cite{OpenAI2026}, based on upstream commit \texttt{fd4aeeb2ee4f}; the
-\path{TheoremS} modules will be committed there at release (the
-\path{RamifiedComparison} modules are contained in commit
-\texttt{08fcd618213a}), and the
-commit hash, \texttt{lake-manifest.json}, build log and
-\texttt{\#print axioms} output will be published with the artifact,
-together with the computation scripts and logs and the transcription of
-Do Duc's list with its SHA-256 checksum.
+The Lean development, the computation scripts and logs, and the
+transcription of Do Duc's list with its SHA-256 checksum are available at
+\url{https://github.com/acprk/butson-hadamard-prime-once}. The Lean
+modules build on a small part of the Lean library of \cite{OpenAI2026}
+(upstream commit \texttt{fd4aeeb2ee4f}, with provenance recorded in
+\path{UPSTREAM.md}); the repository also contains
+\texttt{lake-manifest.json}, the build script and the
+\texttt{\#print axioms} guards.
