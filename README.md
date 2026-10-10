@@ -285,6 +285,28 @@ byte-identical to the originals. The new modules are `TheoremS/`, `RamifiedCompa
 `PrimeOnceAudit.lean`, and they are distributed under the same license. No result of the (not
 peer-reviewed) OpenAI preprint is used in the paper's proofs.
 
+## Further results (2026-10)
+
+Follow-up results on primes dividing the order **twice**, in [`results/`](results/). They are paper proofs with
+computer checks: **none is formalized in Lean, none is in the paper, and none has been peer reviewed.** The caveats
+below (no peer review, prior-art check pending) apply to them in full; in addition, we have not done a separate
+literature check for the individual entries they close.
+
+| Result | Statement | Status |
+| --- | --- | --- |
+| [Theorem Q2](results/q2-series/theorem-q2.md) | no `BH(ℤ_{4q}, h)`, `q` odd prime, `h` odd, `q² ∤ h` | independently verified (adversarial re-derivation) |
+| [Theorem Q2′](results/q2-series/theorem-q2-prime.md) | the same without `q² ∤ h` (ramified version of Lemma A) | single derivation + exhaustive checks |
+| [Theorem E1](results/q2-series/theorem-e1.md) | no `BH(ℤ_{4q²}, h)`, `h` odd, `q² ∤ h`, under a condition on the order of 2 | single derivation + exhaustive checks |
+| [Theorem E2](results/q2-series/theorem-e2.md) | no `BH(ℤ_{4qr}, h)` under decomposition-group conditions; closes `(84,21)` | single derivation + exhaustive checks |
+| [Obstructions for `ν_q ≥ 2`](results/obstructions/README.md) | integral "fake" perfect elements, digit/Galois, relabelling, cohomology and multiplier obstructions | single derivations + checks (one item is a sketch) |
+
+Together, Q2, Q2′, E1 and E2 close **18** entries of Do Duc's list in the case `ν_2(n) = 2`, `h` odd
+([list and counts](results/q2-series/README.md#entries-closed)). Of the 81 entries with a cyclic Sylow `q`-subgroup of
+order `q²` and `q ∤ h` that no criterion we implemented had excluded, 64 remain
+([`results/remaining-open-cases.json`](results/remaining-open-cases.json)). Theorems Q2′, E1 and E2 are short
+extensions of known methods (Lemma A, Schmidt's field descent, the Leung–Schmidt concentration/Parseval argument); their
+nature is stated in each file. The general problem (Conjecture S2) remains open.
+
 ## Status and caveats
 
 - **No human peer review.** The paper has not been submitted or refereed. The only reviews are
